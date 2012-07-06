@@ -93,8 +93,8 @@
 (global-set-key (kbd "C-x m") 'magit-status)
 #+end_src
 
-** TODO Recent files
-   Support open-recent-file
+** Recent files
+   Support open-recent-file. This needs some work.
 
 #+begin_src emacs-lisp
 (require 'recentf)

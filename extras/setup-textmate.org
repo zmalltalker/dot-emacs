@@ -1,9 +1,39 @@
+* Textmate.el
+  textmate.el --- TextMate minor mode for Emacs 
+** Copyright
+   Copyright (C) 2008, 2009 Chris Wanstrath <chris@ozmm.org>
+   Copyright (C) 2012 Marius Mårnes Mathiesen <zmalltalker@zmalltalker.com>
+
+   Licensed under the same terms as Emacs.
+
+** Key bindings
+   - meta return: 'textmate-next-line
+   - control c control t 'textmate-clear-cache
+   - control c control a 'align
+   - control tab 'textmate-shift-right
+   - control shift tab 'textmate-shift-left
+   - control c control k 'comment-or-uncomment-region-or-line
+   - meta t 'textmate-goto-file
+   - meta shift l 'textmate-select-line
+   - meta shift t 'textmate-goto-symbol
+   - alt up 'textmate-column-up
+   - alt down 'textmate-column-down
+   - alt shift up 'textmate-column-up-with-select
+   - alt shift down 'textmate-column-down-with-select
+
+** Plans
+   I included this only to get jump to symbol functionality in
+   ruby-mode; obviously it's a little overkill to include an entire
+   editor to achieve that.
+
+   - [ ] Describe what I want to achieve
+   - [X] Describe key bindings
+   - [ ] Understand the code
+   - [ ] Remove what I don't need
+
 #+begin_src emacs-lisp
-;;; textmate.el --- TextMate minor mode for Emacs 
+;;; 
 
-;; Copyright (C) 2008, 2009 Chris Wanstrath <chris@ozmm.org>
-
-;; Licensed under the same terms as Emacs.
 
 ;; Keywords: textmate osx mac
 ;; Created: 22 Nov 2008
@@ -16,21 +46,6 @@
 
 ;; This minor mode exists to mimick TextMate's awesome
 ;; features.
-
-;; Meh, let's use these key bindings
-;;  (meta return)] 'textmate-next-line)
-;;  (control c)(control t)] 'textmate-clear-cache)
-;;  (control c)(control a)] 'align)
-;;  (control tab)] 'textmate-shift-right)
-;;  (control shift tab)] 'textmate-shift-left)
-;;  (control c)(control k)] 'comment-or-uncomment-region-or-line)
-;;  (meta t)] 'textmate-goto-file)
-;;  (meta shift l)] 'textmate-select-line)
-;;  (meta shift t)] 'textmate-goto-symbol)
-;;  (alt up)] 'textmate-column-up)
-;;  (alt down)] 'textmate-column-down)
-;;  (alt shift up)] 'textmate-column-up-with-select)
-;;  (alt shift down)] 'textmate-column-down-with-select)))
 
 ;; A "project" in textmate-mode is determined by the presence of
 ;; a .git directory, an .hg directory, a Rakefile, or a Makefile.

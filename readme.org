@@ -75,7 +75,7 @@
 (mapc #'org-babel-load-file (directory-files dotfiles-dir t "\\.org$"))
 #+END_EXAMPLE
 
-   So this is what happens:
+** This happens, step by step
    - I start emacs, and it will by convention load ~/.emacs.d/init.el
    - init.el will load org-mode, I keep a local version checked out,
      your Emacs version will probably have org-mode bundled. 
@@ -83,3 +83,4 @@
    - init.el will call org-babel-load-file for any .org files in
      ~/.emacs.d. In fact, the file you're reading right now will have
      a corresponding .el file. 
+   - I treat [[marius.org]] as my main configuration file.

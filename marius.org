@@ -1,0 +1,81 @@
+* Dot emacs, literate style
+
+  This file is loaded from init.el after any .org files in extras/
+  This is because we want to be able to use libraries from there from this file.
+
+** Modes
+
+*** Ido
+    Ido improves all kind of minibuffer activities:
+    - find-file
+    - switch-buffer
+      
+    with case-insensitivity and all kinds of wonderful things. Let's load it up
+
+#+begin_src emacs-lisp
+(load-library "ido")
+(ido-mode)
+(message "Ido loaded")
+#+end_src
+
+** Emacs server mode
+   Let's support emacsclient. For that to work, we'll need to start the server.
+   Unless, of course, it's already running
+
+#+begin_src emacs-lisp
+(require 'server)
+(unless (server-running-p) (server-start))
+#+end_src
+
+** YAML mode
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/yaml-mode")
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+#+end_src
+
+
+** Let's add some moar repositories
+
+#+begin_src emacs-lisp
+(package-initialize)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+#+end_src
+
+
+** Magnar's awesome Magit setup
+
+#+begin_src emacs-lisp
+;; First let's require magit
+(require 'magit)
+(add-to-list 'load-path "/home/marius/.emacs.d/extras")
+;; It's time for Magnar's awesome sauce
+(require 'setup-magit) 
+
+;; Bind Magit to C-x m
+(global-set-key (kbd "C-x m") 'magit-status)
+#+end_src
+
+** TODO Recent files
+   Support open-recent-file
+#+begin_src emacs-lisp
+(require 'recentf)
+(recentf-mode 1)
+#+end_src
+
+
+** Textmate mode
+   I kept missing jump to symbol in Emacs after getting rid of the
+   crutches that were the starter kit. I discovered Chris Wanstrath's
+   textmate-mode, which provides this and a lot more.
+
+   The thing is, I don't like the key bindings used there; plus there
+   are a lot of Textmate features I don't care about. In the process
+   of adjusting it to my needs, I decided to use org-babel for it instead.
+
+#+begin_src emacs-lisp
+(textmate-mode)
+#+end_src
+

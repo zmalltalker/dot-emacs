@@ -23,7 +23,8 @@
 ;; Load any libraries (anything in extras/*.org) first, so 
 ;; we can use it in our own files
 (setq org-custom-library-dir (expand-file-name "extras" dotfiles-dir))
-(mapc #'org-babel-load-file (directory-files org-custom-library-dir t "\\.org$"))
+(mapc #'org-babel-tangle-file (directory-files org-custom-library-dir t "\\.org$"))
+(add-to-list 'load-path org-custom-library-dir)
 
 ;; load up all literate org-mode files in this directory
 (mapc #'org-babel-load-file (directory-files dotfiles-dir t "\\.org$"))

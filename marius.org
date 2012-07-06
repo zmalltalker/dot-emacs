@@ -32,6 +32,14 @@
 (ido-mode)
 #+end_src
 
+*** Jump to symbol support
+    Jump to a symbol (function, class etc.) with completion. 
+    No textmate required
+
+#+begin_src emacs-lisp
+(load-file "~/.emacs.d/extras/goto-symbol.el")
+#+end_src
+
 ** Emacs server mode
    Let's support emacsclient. For that to work, we'll need to start the server.
    Unless, of course, it's already running

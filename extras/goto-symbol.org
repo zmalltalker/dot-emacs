@@ -32,6 +32,7 @@
     (let* ((selected-symbol (ido-completing-read "Symbol? " symbol-names))
            (position (cdr (assoc selected-symbol name-and-pos))))
       (goto-char position))))
+
 #+end_src
 
 ** Keybinding 

@@ -2,3 +2,6 @@ marius.el
 extras/setup-textmate.el
 extras/setup-magit.el
 extras/yaml-mode.el
+elpa/*
+auto-save-list/*
+/src/org-mode/

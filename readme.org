@@ -37,8 +37,10 @@
    comments you risk not updating them as you change stuff, and end up
    with comments that are obviously false:
 
+#+BEGIN_EXAMPLE
      ;; I found some awesome snippets for Ruby on the web
      (require 'yasnippets)
+#+END_EXAMPLE
 
    What can I say? This sucks.
 

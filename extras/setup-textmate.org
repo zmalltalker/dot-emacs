@@ -21,6 +21,9 @@
    - alt shift up 'textmate-column-up-with-select
    - alt shift down 'textmate-column-down-with-select
 
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-x C-i") 'textmate-goto-symbol)
+#+end_src
 ** Plans
    I included this only to get jump to symbol functionality in
    ruby-mode; obviously it's a little overkill to include an entire

@@ -78,4 +78,22 @@
 #+begin_src emacs-lisp
 (textmate-mode)
 #+end_src
+   
 
+* My Emacs installation
+  My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
+  version doesn't work 100% with all of the orgmode features, either
+  because it's a prerelease version or because it's poorly built.
+
+  Whenever I try to run org-export, I get an error along the lines of
+  "cannot find library org"; trying to resolve this by altering
+  org-mode just seems to make matters worse.
+
+  Because of this I have built and installed emacs 24.1 from source,
+  and then used the alternatives system to swap the default Emacs
+  installation with my own.
+
+  I used [[http://jonebird.com/2011/12/29/installing-emacs-v24-on-fedora/][this recipe]] to install the required packages for building
+  emacs, installed my custom emacs into a non-standard location
+  (/usr/local/emacs24) and used alternatives to swap emacs
+  implementation. 

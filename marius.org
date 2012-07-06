@@ -100,19 +100,6 @@
 (require 'recentf)
 (recentf-mode 1)
 #+end_src
-
-** Textmate mode
-   I kept missing jump to symbol in Emacs after getting rid of the
-   crutches that were the starter kit. I discovered Chris Wanstrath's
-   textmate-mode, which provides this and a lot more.
-
-   The thing is, I don't like the key bindings used there; plus there
-   are a lot of Textmate features I don't care about. In the process
-   of adjusting it to my needs, I decided to use org-babel for it instead.
-
-#+begin_src emacs-lisp
-(textmate-mode)
-#+end_src
    
 
 * My Emacs installation

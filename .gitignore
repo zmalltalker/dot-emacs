@@ -5,3 +5,4 @@ extras/yaml-mode.el
 elpa/*
 auto-save-list/*
 /src/org-mode/
+/readme.el

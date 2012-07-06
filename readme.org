@@ -85,3 +85,16 @@
      a corresponding .el file. 
    - I treat marius.org as my main configuration file. (I would make
      this a hyperlink, but you know ... later.)
+
+** Just to prove I'm an idiot
+   I just discovered my fantastic setup will cause an error if an .org
+   file in ~/.emacs.d does not have a corresponding .el file. Since
+   this file does not contain any begin_src instructions, a readme.el
+   file would not be generated, and I'd get a load error when starting
+   Emacs.
+   
+   The only way I could think of to resolve this is to add an empty
+   source block :-/
+#+begin_src emacs-lisp
+;; 
+#+end_src

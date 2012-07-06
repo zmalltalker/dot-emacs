@@ -83,4 +83,4 @@
    - init.el will call org-babel-load-file for any .org files in
      ~/.emacs.d. In fact, the file you're reading right now will have
      a corresponding .el file. 
-   - I treat [[file:marius.org][marius.org]] as my main configuration file.
+   - I treat [[file:dot-emacs/marius.org][marius.org]] as my main configuration file.

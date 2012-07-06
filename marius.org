@@ -132,3 +132,16 @@
   emacs, installed my custom emacs into a non-standard location
   (/usr/local/emacs24) and used alternatives to swap emacs
   implementation. 
+
+
+** Keeping files in sync is tricky
+
+   By default, Emacs will not update the contents of open buffers when
+   a file changes on disk. This is inconvenient when switching
+   branches in Git - as you'd risk editing stale buffers. 
+
+   This problem can be solved
+
+#+begin_src emacs-lisp
+(global-auto-revert-mode)
+#+end_src

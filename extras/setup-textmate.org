@@ -15,7 +15,7 @@
    - control c control k 'comment-or-uncomment-region-or-line
    - meta t 'textmate-goto-file
    - meta shift l 'textmate-select-line
-   - meta shift t 'textmate-goto-symbol
+   - control x control i 'textmate-goto-symbol
    - alt up 'textmate-column-up
    - alt down 'textmate-column-down
    - alt shift up 'textmate-column-up-with-select

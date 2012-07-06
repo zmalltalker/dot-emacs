@@ -1,21 +1,35 @@
+#+TITLE:     marius.org
+#+AUTHOR:    Marius Mathiesen
+#+EMAIL:     zmalltalker@zmalltalker.com
+#+DATE:      2012-07-06 Fri
+#+DESCRIPTION: My emacs configuration
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
 * Dot emacs, literate style
 
   This file is loaded from init.el after any .org files in extras/
   This is because we want to be able to use libraries from there from this file.
 
-** Modes
-
-*** Ido
+** Ido
     Ido improves all kind of minibuffer activities:
     - find-file
     - switch-buffer
       
-    with case-insensitivity and all kinds of wonderful things. Let's load it up
+    with case-insensitivity and all kinds of wonderful things. Let's
+    load it up: 
 
 #+begin_src emacs-lisp
 (load-library "ido")
 (ido-mode)
-(message "Ido loaded")
 #+end_src
 
 ** Emacs server mode
@@ -29,42 +43,63 @@
 
 ** YAML mode
 
+   YAML is ... should we say picky? ... to edit by hand. Indentation
+   matters a lot, and syntax highlighting is a great help. 
+
+   Let's get some help:
+
 #+begin_src emacs-lisp
-;;(add-to-list 'load-path "~/.emacs.d/yaml-mode")
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 #+end_src
 
 
-** Let's add some moar repositories
+** Packages
+
+   Emacs 24 ships with a package system, which is great. 
+   Let's enable it:
 
 #+begin_src emacs-lisp
 (package-initialize)
+#+end_src 
+
+   and add some more repositories:
+
+#+begin_src emacs-lisp
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 #+end_src
 
 
 ** Magnar's awesome Magit setup
+   Magit. I was skeptical at first, but then I just ... yum. 
+   Let's load it
 
 #+begin_src emacs-lisp
-;; First let's require magit
 (require 'magit)
 (add-to-list 'load-path "/home/marius/.emacs.d/extras")
-;; It's time for Magnar's awesome sauce
-(require 'setup-magit) 
+#+end_src
 
-;; Bind Magit to C-x m
+   Magnar (or Christian?) shared some customizations for Magit
+   that make it even better:
+
+#+begin_src emacs-lisp
+(require 'setup-magit) 
+#+end_src
+
+   I use C-x m for starting magit
+   
+#+begin_src emacs-lisp
 (global-set-key (kbd "C-x m") 'magit-status)
 #+end_src
 
 ** TODO Recent files
    Support open-recent-file
+
 #+begin_src emacs-lisp
 (require 'recentf)
 (recentf-mode 1)
 #+end_src
-
 
 ** Textmate mode
    I kept missing jump to symbol in Emacs after getting rid of the

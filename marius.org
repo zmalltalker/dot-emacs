@@ -110,6 +110,18 @@
 #+end_src
    
 
+** Theme
+   Emacs 24 has built-in theming support. 
+
+   I'm using the solarized-dark theme right now. It's really easy on
+   my eyes and pretty as well. This theme is installed using Emacs'
+   package manager, so solarized would be in elpa/solarized-theme-0.5.0.
+   To install a theme, use package-install.
+
+#+begin_src emacs-lisp
+(load-theme 'solarized-dark t)
+#+end_src
+
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

@@ -1,0 +1,35 @@
+* Tags (ctags, etags, whatever)
+  Tags are cool. 
+** Creating the TAGS file
+   Use the `ctags` command with the -e switch (for emacs mode) to
+   build the TAGS file. 
+
+   My Gitorious setup uses this definition:
+
+#+BEGIN_EXAMPLE
+alias tags="ctags -e -a --Ruby-kinds=-fF -o TAGS -R app test lib config script bin"
+#+END_EXAMPLE
+** Find definition of a symbol (method, function...)
+   The main thing we use tags for is looking up the definition of a
+   function. With the point in the function, enter M-., and Emacs will
+   jump to the definition of the function. If you haven't visited the
+   TAGS file yet, Emacs will prompt you to do so.
+
+   If the first match isn't what you were looking for, use C-t M-. to
+   find the next one. *Note*: you don't have to enter the full tag.
+** Search for a tag
+   Since ctags already indexes your files, you can use it to search
+   for invocations of a tag as well. tags-search does this for you.
+   I really should bind this to a key combo.
+** Query-replace from tags
+   Even more awesome, how about being able to query-replace based on
+   ctags? Well, you can. tags-query-replace is just like
+   query-replace, except it will scan through all the files referenced
+   in TAGS. Which means that if I want to rename a method, this would
+   be what to use. 
+
+   As always, use ! to replace all occurrences. I have my ass covered
+   by tests.
+   
+** TODO Key bindings
+   Need to sleep on what to bind these suckers to. 

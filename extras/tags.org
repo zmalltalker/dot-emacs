@@ -1,5 +1,6 @@
 * Tags (ctags, etags, whatever)
   Tags are cool. 
+
 ** Creating the TAGS file
    Use the `ctags` command with the -e switch (for emacs mode) to
    build the TAGS file. 
@@ -32,4 +33,4 @@ alias tags="ctags -e -a --Ruby-kinds=-fF -o TAGS -R app test lib config script b
    by tests.
    
 ** TODO Key bindings
-   Need to sleep on what to bind these suckers to. 
+   M-? is good for tags-search

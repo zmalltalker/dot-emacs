@@ -11,7 +11,35 @@
 (global-set-key (kbd "C-x C-i") 'ido-goto-symbol)
 #+end_src
 
+** Enter key in ruby-mode
+   When doing Ruby, bind <ret> to =reindent-then-newline-and-indent=
 
+#+begin_src emacs-lisp
+(defun zmalltalker-ruby-comment-indent ()
+  (comment-indent-new-line)
+)
+(defun zmalltalker-ruby-indent () 
+  (reindent-then-newline-and-indent)
+)
+(defun zmalltalker-ruby-flexible-newline ()
+  (interactive)
+  (if (zmalltalker-ruby-at-comment-line)
+      (zmalltalker-ruby-comment-indent)
+    (zmalltalker-ruby-indent)
+    )
+  )
+(defun zmalltalker-ruby-at-comment-line ()
+  (save-excursion
+   (back-to-indentation)
+   (looking-at "#")
+   )
+)
+
+(defun zmalltalker-ruby-config ()
+  (local-set-key (kbd "RET") 'zmalltalker-ruby-flexible-newline)
+)
+(add-hook 'ruby-mode-hook 'zmalltalker-ruby-config)
+#+end_src
 * Defined elsewhere
 ** Tags
    [[file:tags.org::*Key%20bindings][Key bindings for tags]]

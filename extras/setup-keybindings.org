@@ -1,0 +1,6 @@
+* Key bindings
+** Commenting 
+   I like to use C-x / for comment/uncommenting
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-x /") 'comment-or-uncomment-region)
+#+end_src

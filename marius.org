@@ -211,6 +211,5 @@
 
 #+begin_src emacs-lisp
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
-(global-set-key (kbd "C-x /") 'comment-or-uncomment-region)
 #+end_src
    

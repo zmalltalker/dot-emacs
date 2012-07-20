@@ -9,3 +9,4 @@ auto-save-list/*
 /extras/goto-symbol.el
 /extras/setup-testing.el
 /extras/tags.el
+/extras/setup-keybindings.el

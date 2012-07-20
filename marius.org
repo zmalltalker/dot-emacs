@@ -208,3 +208,12 @@
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
 #+end_src
    
+
+** Other (contributed) libraries
+*** Expand region
+    Lets you do wonderful things with regions.
+#+begin_src emacs-lisp
+(add-to-list 'load-path (concat dotfiles-dir "contrib/expand-region"))
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+#+end_src

@@ -15,3 +15,5 @@
 * Defined elsewhere
 ** Tags
    [[file:tags.org::*Key%20bindings][Key bindings for tags]]
+** Expand region
+   [[file:~/.emacs.d/marius.org::*Expand%20region][Expand region]]

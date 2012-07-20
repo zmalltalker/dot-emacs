@@ -4,3 +4,14 @@
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-x /") 'comment-or-uncomment-region)
 #+end_src
+
+** Goto symbol
+   C-x C-i for jumping to a symbol
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-x C-i") 'ido-goto-symbol)
+#+end_src
+
+
+* Defined elsewhere
+** Tags
+   [[file:tags.org::*Key%20bindings][Key bindings for tags]]

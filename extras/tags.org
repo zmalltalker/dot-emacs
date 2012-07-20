@@ -1,7 +1,4 @@
 * Tags (ctags, etags, whatever)
-#+begin_src emacs-lisp
-(message "Loading tags")
-#+end_src
   Tags are cool. 
 
 ** Creating the TAGS file
@@ -35,5 +32,10 @@ alias tags="ctags -e -a --Ruby-kinds=-fF -o TAGS -R app test lib config script b
    As always, use ! to replace all occurrences. I have my ass covered
    by tests.
    
-** TODO Key bindings
+** Key bindings
    M-? is good for tags-search
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-?") 'tags-search)
+#+end_src
+

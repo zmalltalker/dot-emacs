@@ -84,7 +84,6 @@
                         (string= (car imenu--rescan-item) name))
               (add-to-list 'symbol-names name)
               (add-to-list 'name-and-pos (cons name position))))))))
-(global-set-key (kbd "C-x C-i") 'ido-goto-symbol)
 #+end_src
 
 ** Emacs server mode
@@ -123,10 +122,6 @@
 #+begin_src emacs-lisp
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
-#+end_src
-
-#+begin_src emacs-lisp
-(global-set-key (kbd "M-?") 'tags-search)
 #+end_src
 
 ** Magnar's awesome Magit setup

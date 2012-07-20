@@ -7,3 +7,5 @@ auto-save-list/*
 /src/org-mode/
 /readme.el
 /extras/goto-symbol.el
+/extras/setup-testing.el
+/extras/tags.el

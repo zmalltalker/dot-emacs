@@ -202,3 +202,15 @@
 #+begin_src emacs-lisp
 (global-auto-revert-mode)
 #+end_src
+   
+** Misc stuff
+   
+   I'm lazy, didn't find a place to put this yet.
+   - Use ruby-mode for Rakefiles
+   - Bind C-x / to comment-or-uncomment-region
+
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+(global-set-key (kbd "C-x /") 'comment-or-uncomment-region)
+#+end_src
+   

@@ -22,9 +22,20 @@
 
 ;; Load any libraries (anything in extras/*.org) first, so 
 ;; we can use it in our own files
-(setq org-custom-library-dir (expand-file-name "extras" dotfiles-dir))
-(mapc #'org-babel-tangle-file (directory-files org-custom-library-dir t "\\.org$"))
-(add-to-list 'load-path org-custom-library-dir)
+(setq zmalltalker-extras-dir (expand-file-name "extras" dotfiles-dir))
+(setq zmalltalker-extras-files (directory-files zmalltalker-extras-dir t "\\.org$"))
+
+(defun zmalltalker-literal-load-file (file)
+  "Load an org file from ~/.emacs.d/extras - assuming it contains
+code blocks which can be tangled"
+  (org-babel-load-file (expand-file-name file
+                                         zmalltalker-extras-dir)))
+
+(mapc #'zmalltalker-literal-load-file zmalltalker-extras-files)
+
+
+(add-to-list 'load-path zmalltalker-extras-dir)
+
 ;; load up all literate org-mode files in this directory
 (mapc #'org-babel-load-file (directory-files dotfiles-dir t "\\.org$"))
 

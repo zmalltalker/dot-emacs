@@ -1,4 +1,7 @@
 * Tags (ctags, etags, whatever)
+#+begin_src emacs-lisp
+(message "Loading tags")
+#+end_src
   Tags are cool. 
 
 ** Creating the TAGS file

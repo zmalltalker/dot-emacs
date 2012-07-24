@@ -10,7 +10,7 @@
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-x C-i") 'ido-goto-symbol)
 #+end_src
-
+   
 ** Enter key in ruby-mode
    When doing Ruby, bind <ret> to =reindent-then-newline-and-indent=
 
@@ -42,6 +42,11 @@
     (local-set-key (kbd "RET") 'zmalltalker/ruby-flexible-newline)
   )
   (add-hook 'ruby-mode-hook 'zmalltalker/ruby-config)
+#+end_src
+** Hippie-expand
+   C-esc for hippie-expand
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-<escape>") 'hippie-expand)
 #+end_src
 * Defined elsewhere
 ** Tags

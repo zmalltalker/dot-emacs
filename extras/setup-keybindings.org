@@ -48,6 +48,7 @@
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-<escape>") 'hippie-expand)
 #+end_src
+** Bind align-regexp "=" for fun and profit
 * Defined elsewhere
 ** Tags
    [[file:tags.org::*Key%20bindings][Key bindings for tags]]

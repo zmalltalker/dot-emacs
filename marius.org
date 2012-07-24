@@ -95,6 +95,31 @@
 (unless (server-running-p) (server-start))
 #+end_src
 
+** Blogging from org
+   Apparently, we need to set up the project list
+
+#+begin_src emacs-lisp
+    (setq org-publish-project-alist 
+          '(("blog"
+             :base-directory "/home/marius/Projects/blog/orgfiles" 
+             :publishing-directory "/home/marius/Projects/blog/output"
+             :headline-levels 3
+             :table-of-contents nil
+             :style "<link rel=\"stylesheet\" href=\"zlog.css\" type=\"text/css\"/>"
+             :html-preamble nil
+             :html-postamble nil
+             :section-numbers nil
+  )))
+#+end_src
+
+   And then we definitely want to use htmlize, as this will do
+   wonderful things to source code in org files. It's distributed with
+   orgmode, but we'll need to load it.
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path (concat dotfiles-dir "/src/org-mode/contrib/lisp"))
+(require 'htmlize)
+#+end_src
 ** YAML mode
 
    YAML is ... should we say *picky*? ... to edit by hand. Indentation

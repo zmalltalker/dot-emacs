@@ -1,3 +1,6 @@
 [submodule "contrib/expand-region"]
 	path = contrib/expand-region
 	url = https://github.com/magnars/expand-region.el.git
+[submodule "contrib/rvm.el"]
+	path = contrib/rvm.el
+	url = https://github.com/senny/rvm.el.git

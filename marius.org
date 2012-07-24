@@ -204,6 +204,7 @@
 (global-auto-revert-mode)
 #+end_src
    
+
 ** Misc stuff
    
    I'm lazy, didn't find a place to put this yet.
@@ -222,4 +223,11 @@
 (add-to-list 'load-path (concat dotfiles-dir "contrib/expand-region"))
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
+#+end_src
+
+*** rvm
+    Use a usable ruby
+#+begin_src emacs-lisp
+(add-to-list 'load-path (concat dotfiles-dir "contrib/rvm.el"))
+(require 'rvm)
 #+end_src

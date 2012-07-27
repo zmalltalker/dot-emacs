@@ -49,6 +49,10 @@
 (global-set-key (kbd "C-<escape>") 'hippie-expand)
 #+end_src
 ** Bind align-regexp "=" for fun and profit
+** C-c w to store an org link
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c w") 'org-store-link)
+#+end_src
 * Defined elsewhere
 ** Tags
    [[file:tags.org::*Key%20bindings][Key bindings for tags]]

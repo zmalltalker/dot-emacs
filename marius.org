@@ -139,6 +139,7 @@ b#+TITLE:     marius.org
 (autoload 'rpm-spec-mode "rpm-spec-mode.el" "RPM spec mode." t)
 (require 'rpm-spec-mode)
 #+end_src
+
 ** YAML mode
 
    YAML is ... should we say *picky*? ... to edit by hand. Indentation

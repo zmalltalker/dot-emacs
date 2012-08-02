@@ -99,7 +99,6 @@ b#+TITLE:     marius.org
    Apparently, we need to set up the project list
 
 #+begin_src emacs-lisp
-    (setq org-export-html-postamble-format '(("en" " <div id=\"disqus_thread\"></div><script type=\"text/javascript\" src=\"http://disqus.com/forums/zmalltalker/embed.js\"></script><noscript><a href=\"http://zmalltalker.disqus.com/?url=ref\">View the discussion thread.</a></noscript><a href=\"http://disqus.com\" class=\"dsq-brlink\">blog comments powered by <span class=\"logo-disqus\">Disqus</span></a><p id=\"byline\">Written on %d by %a</p>")))
       (setq org-publish-project-alist 
             '(("blogg"
                :base-directory "/home/marius/Projects/blog/orgfiles" 
@@ -107,9 +106,9 @@ b#+TITLE:     marius.org
                :headline-levels 3
                :recursive t
                :table-of-contents nil
-               :style "<link rel=\"stylesheet\" href=\"zlog.css\" type=\"text/css\"/>"
                :html-preamble nil
-               :html-postamble t
+               :html-postamble nil
+               :body-only t
                :section-numbers nil
                :auto-sitemap t
                )
@@ -119,10 +118,27 @@ b#+TITLE:     marius.org
                :publishing-directory "/ssh:friskbris.no:/var/www/zmalltalker.com/images/"
                :publishing-function org-publish-attachment)
   ))
-    
-    (global-set-key (kbd "C-x p") 'org-publish-current-project)
-    
 #+end_src
+
+   Let's bind =C-x p= to =org-publish-current-project=
+#+begin_src emacs-lisp
+    (global-set-key (kbd "C-x p") 'org-publish-current-project)
+#+end_src
+
+   Org-mode produces some quite nasty HTML, and I use Twitter
+   Bootstrap to mark up my code, so I want to use different tags from
+   the defaults.
+
+   Because of this I export the body part only, and run a Rake task
+   which uses ERB to generate a full HTML page afterwards. I'm adding
+   a hook that's run after publishing; this will generate any updated
+   HTML files and publish it to my website.
+
+#+begin_src emacs-lisp
+  (add-hook 'org-publish-after-export-hook (lambda () 
+                                             (shell-command "cd ~/Projects/blog && rake deploy")))
+
+#+end_src    
 
    And then we definitely want to use htmlize, as this will do
    wonderful things to source code in org files. It's distributed with

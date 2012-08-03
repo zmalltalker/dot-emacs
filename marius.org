@@ -306,3 +306,8 @@
 (require 'puppet-mode)
 (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 #+end_src
+** Gitorious stuff
+   I'm working on an Emacs thing for merge requests.
+#+begin_src emacs-lisp
+(require 'merge-requests)
+#+end_src

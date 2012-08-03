@@ -156,6 +156,12 @@ b#+TITLE:     marius.org
 (require 'rpm-spec-mode)
 #+end_src
 
+   Does fontified Smalltalk sound good? Let's do it!
+
+#+begin_src emacs-lisp
+(require 'smalltalk-mode)
+#+end_src
+
 ** YAML mode
 
    YAML is ... should we say *picky*? ... to edit by hand. Indentation

@@ -1,4 +1,4 @@
-b#+TITLE:     marius.org
+#+TITLE:     marius.org
 #+AUTHOR:    Marius Mathiesen
 #+EMAIL:     zmalltalker@zmalltalker.com
 #+DATE:      2012-07-06 Fri
@@ -280,6 +280,7 @@ b#+TITLE:     marius.org
 
 #+begin_src emacs-lisp
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 #+end_src
    
 

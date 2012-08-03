@@ -39,3 +39,7 @@ alias tags="ctags -e -a --Ruby-kinds=-fF -o TAGS -R app test lib config script b
 (global-set-key (kbd "M-?") 'tags-search)
 #+end_src
 
+   Oh yeah, how about M-RET for =complete-tag?=
+#+begin_src emacs-lisp
+  (global-set-key (kbd "M-RET") 'complete-tag)
+#+end_src

@@ -299,3 +299,10 @@
 (add-to-list 'load-path (concat dotfiles-dir "contrib/rvm.el"))
 (require 'rvm)
 #+end_src
+
+*** Puppet-mode
+    We need puppet-mode for puppet manifests
+#+begin_src emacs-lisp
+(require 'puppet-mode)
+(add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
+#+end_src

@@ -67,12 +67,13 @@ when called with gt-simple-node-value node 'name would return John
 
 
 
+
 (defun gt-display-merge-requests ()
   (interactive)
   (let      
-      ((project-name (read-string "Enter project name: "))
-       (repository (read-string "Enter repository name: "))
-       (status (read-string "Enter status: "))
+      ((project-name (read-string "Enter project name: " nil nil "gitorious"))
+       (repository (read-string "Enter repository name: " nil nil "mainline"))
+       (status (read-string "Enter status: " nil nil "Open"))
        (mr-buffer (get-buffer-create "*merge-requests"))
        )
     (setq merge-requests (gt-fetch-merge-requests project-name repository status))

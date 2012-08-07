@@ -1,3 +1,7 @@
+(require 'cl)
+(require 'url)
+(require 'xml)
+
 (defun gt-extract-text-from-node (node)
   "Extract the text value of a node, the last element of the list"
   (car (reverse node)))
@@ -22,6 +26,14 @@ when called with gt-simple-node-value node 'name would return John
   (concat "https://gitorious.org/" project-name "/" repository-name "/merge_requests/" id)
 )
 
+(defstruct merge-request
+  "The merge request"
+  id
+  summary
+  status
+  proposal
+  uri
+  )
 (defun gt-build-merge-request (merge-request)
   "Build a list of attributes for a merge-request node in the form
 (id summary status uri)
@@ -30,7 +42,7 @@ when called with gt-simple-node-value node 'name would return John
   (setq id (gt-extract-text-from-node (car (xml-get-children merge-request 'id))))
   (setq status (gt-simple-node-value merge-request 'status))
   (setq uri (gt-merge-request-url merge-request "gitorious" "mainline"))
-  (list id summary status uri)
+  (make-merge-request :summary summary :id id :status status :uri uri)
 )
 (defun gt-parse-merge-requests (filename)
   "Extract a list of merge requests from filename"
@@ -65,10 +77,16 @@ when called with gt-simple-node-value node 'name would return John
     )
   )
 
+;; TODO: Create a merge-request mode
+;; Keybindings
+;; readonly
 
 
-
-(defun gt-display-merge-requests ()
+(defun gt-insert-merge-request-line (merge-request)
+  (insert (format "- %s: " (merge-request-id merge-request)))
+  (insert (format "%s \n" (merge-request-summary merge-request)))
+)
+(defun gitorious/display-merge-requests ()
   (interactive)
   (let      
       ((project-name (read-string "Enter project name: " nil nil "gitorious"))
@@ -78,18 +96,17 @@ when called with gt-simple-node-value node 'name would return John
        )
     (setq merge-requests (gt-fetch-merge-requests project-name repository status))
     (switch-to-buffer mr-buffer)
+    (mark-whole-buffer)
+    (kill-region (point) (mark))
     (goto-char (point-min))
     (insert (format "MERGE REQUESTS IN %s/%s WITH STATUS %s\n" project-name repository status))
     (insert "*****************************************************\n")
     (while merge-requests 
       (setq merge-request (car merge-requests))
-      (insert (concat "- " (car merge-request)))
-      (setq merge-request (cdr merge-request))
-      (insert (concat ": " (car merge-request) "\n"))
-      (setq merge-request (cdr merge-request))
+      (gt-insert-merge-request-line merge-request)
       (setq merge-requests (cdr merge-requests))
-      )    
-    )
+      )
+    )    
 )
 
 (provide 'merge-requests)

@@ -49,7 +49,8 @@ code blocks which can be tangled"
  '(custom-safe-themes (quote ("501caa208affa1145ccbb4b74b6cd66c3091e41c5bb66c677feda9def5eab19c" "72cc9ae08503b8e977801c6d6ec17043b55313cda34bcf0e6921f2f04cf2da56" default)))
  '(make-backup-files nil)
  '(org-babel-load-languages (quote ((emacs-lisp . t) (ruby . t))))
- '(org-confirm-babel-evaluate nil))
+ '(org-confirm-babel-evaluate nil)
+ '(show-paren-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -240,6 +240,14 @@
   - [X] set correct ruby
   - [X] run $ruby -Ilib:test <project_root>/path
   - [ ] compile
+** Mark text and delete/replace immediately
+   You know how other editors will let you select text and then start
+   typing right away to replace it? You know how you need to remove
+   this from your muscle memory when using Emacs? No more
+
+#+begin_src emacs-lisp
+(delete-selection-mode)
+#+end_src
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

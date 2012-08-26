@@ -271,6 +271,14 @@
 #+BEGIN_SRC emacs-lisp
 (require 'org-e-man)
 #+END_SRC
+** Speed commands in org
+   With speed commands enabled, I can enter single-letter commands
+   when the cursor is at the very beginning of a headline. =?=
+   displays a menu
+
+#+BEGIN_SRC emacs-lisp
+(setq org-use-speed-commands t)
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

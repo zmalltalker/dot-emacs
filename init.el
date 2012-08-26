@@ -6,9 +6,11 @@
 ;; Load up Org Mode and (now included) Org Babel for elisp embedded in Org Mode files
 (setq dotfiles-dir (file-name-directory (or (buffer-file-name) load-file-name)))
 
+
+(add-to-list 'load-path "~/.emacs.d/src/org-mode/lisp")
 (let* ((org-dir (expand-file-name
                  "lisp" (expand-file-name
-                         "org" (expand-file-name
+                         "org-mode" (expand-file-name
                                 "src" dotfiles-dir))))
        (org-contrib-dir (expand-file-name
                          "lisp" (expand-file-name
@@ -18,7 +20,8 @@
                           (or load-path nil))))
   ;; load up Org-mode and Org-babel
   (require 'org-install)
-  (require 'ob-tangle))
+  (require 'ob-tangle)
+)
 
 ;; Load any libraries (anything in extras/*.org) first, so 
 ;; we can use it in our own files

@@ -248,6 +248,29 @@
 #+begin_src emacs-lisp
 (delete-selection-mode)
 #+end_src
+** Ascii art to Unicode
+   Convert simple ASCII art drawings (and org-tables) to beautiful
+   Unicode.
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path (concat dotfiles-dir "/contrib"))
+(require 'ascii-art-to-unicode)
+#+END_SRC
+** More org exporters (Org > 7.9)
+   Org's =contrib/lisp= contains a lot of new exporters.
+#+BEGIN_SRC emacs-lisp
+(require 'org-export)
+#+END_SRC
+
+   Markdown is an inferior format, and can be generated. 
+#+BEGIN_SRC emacs-lisp
+(require 'org-md)
+#+END_SRC
+
+   Generating man pages? Great idea.
+
+#+BEGIN_SRC emacs-lisp
+(require 'org-e-man)
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

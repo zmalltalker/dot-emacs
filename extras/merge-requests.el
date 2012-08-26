@@ -96,6 +96,7 @@ when called with gt-simple-node-value node 'name would return John
        )
     (setq merge-requests (gt-fetch-merge-requests project-name repository status))
     (switch-to-buffer mr-buffer)
+    (merge-request-mode)
     (mark-whole-buffer)
     (kill-region (point) (mark))
     (goto-char (point-min))
@@ -108,5 +109,17 @@ when called with gt-simple-node-value node 'name would return John
       )
     )    
 )
+
+(defun next-merge-request ()
+  "Jump to the next merge request"
+  (message "Will be coming shortly")
+)
+(defvar merge-request-mode-map 
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c n") 'next-merge-request)
+    map))
+
+(define-minor-mode merge-request-mode "Merge requests mode" 
+  :lighter " Merge Request" :keymap 'merge-request-mode-map)
 
 (provide 'merge-requests)

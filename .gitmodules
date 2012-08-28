@@ -4,3 +4,6 @@
 [submodule "contrib/rvm.el"]
 	path = contrib/rvm.el
 	url = https://github.com/senny/rvm.el.git
+[submodule "src/org-mode"]
+	path = src/org-mode
+	url = git://orgmode.org/org-mode.git

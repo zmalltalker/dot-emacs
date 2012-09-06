@@ -271,6 +271,12 @@
 #+BEGIN_SRC emacs-lisp
 (require 'org-e-man)
 #+END_SRC
+
+   Oh yeah, and ascii
+
+#+BEGIN_SRC emacs-lisp
+(require 'org-e-ascii)
+#+END_SRC
 ** Speed commands in org
    With speed commands enabled, I can enter single-letter commands
    when the cursor is at the very beginning of a headline. =?=

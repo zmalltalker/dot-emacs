@@ -321,10 +321,12 @@
    
    I'm lazy, didn't find a place to put this yet.
    - Use ruby-mode for Rakefiles
+   - Use ruby-mode for Gemfiles
    - Bind C-x / to comment-or-uncomment-region
 
 #+begin_src emacs-lisp
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 #+end_src
    

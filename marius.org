@@ -10,8 +10,8 @@
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
-#+LINK_UP:   
-#+LINK_HOME: 
+#+LINK_UP:
+#+LINK_HOME:
 #+XSLT:
 
 * Dot emacs, literate style
@@ -23,9 +23,9 @@
     Ido improves all kind of minibuffer activities:
     - find-file
     - switch-buffer
-      
+
     with case-insensitivity and all kinds of wonderful things. Let's
-    load it up: 
+    load it up:
 
 #+begin_src emacs-lisp
 (load-library "ido")
@@ -33,7 +33,7 @@
 #+end_src
 
 *** Jump to symbol support
-    Jump to a symbol (function, class etc.) with completion. 
+    Jump to a symbol (function, class etc.) with completion.
     No textmate required
 
 #+begin_src emacs-lisp
@@ -99,9 +99,9 @@
    Apparently, we need to set up the project list
 
 #+begin_src emacs-lisp
-      (setq org-publish-project-alist 
+      (setq org-publish-project-alist
             '(("blogg"
-               :base-directory "/home/marius/Projects/blog/orgfiles" 
+               :base-directory "/home/marius/Projects/blog/orgfiles"
                :publishing-directory "/home/marius/Projects/blog/output"
                :headline-levels 3
                :recursive t
@@ -135,10 +135,10 @@
    HTML files and publish it to my website.
 
 #+begin_src emacs-lisp
-  (add-hook 'org-publish-after-export-hook (lambda () 
+  (add-hook 'org-publish-after-export-hook (lambda ()
                                              (shell-command "cd ~/Projects/blog && rake deploy")))
 
-#+end_src    
+#+end_src
 
    And then we definitely want to use htmlize, as this will do
    wonderful things to source code in org files. It's distributed with
@@ -165,7 +165,7 @@
 ** YAML mode
 
    YAML is ... should we say *picky*? ... to edit by hand. Indentation
-   matters a lot, and syntax highlighting is a great help. 
+   matters a lot, and syntax highlighting is a great help.
 
    Let's get some help:
 
@@ -177,12 +177,12 @@
 
 ** Packages
 
-   Emacs 24 ships with a package system, which is great. 
+   Emacs 24 ships with a package system, which is great.
    Let's enable it:
 
 #+begin_src emacs-lisp
 (package-initialize)
-#+end_src 
+#+end_src
 
    and add some more repositories:
 
@@ -192,7 +192,7 @@
 #+end_src
 
 ** Magnar's awesome Magit setup
-   Magit. I was skeptical at first, but then I just ... yum. 
+   Magit. I was skeptical at first, but then I just ... yum.
    Let's load it
 
 #+begin_src emacs-lisp
@@ -204,11 +204,11 @@
    that make it even better:
 
 #+begin_src emacs-lisp
-(require 'setup-magit) 
+(require 'setup-magit)
 #+end_src
 
    I use C-x m for starting magit
-   
+
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-x m") 'magit-status)
 #+end_src
@@ -220,10 +220,10 @@
 (require 'recentf)
 (recentf-mode 1)
 #+end_src
-   
+
 
 ** Theme
-   Emacs 24 has built-in theming support. 
+   Emacs 24 has built-in theming support.
 
    I'm using the solarized-dark theme right now. It's really easy on
    my eyes and pretty as well. This theme is installed using Emacs'
@@ -261,7 +261,7 @@
 (require 'org-export)
 #+END_SRC
 
-   Markdown is an inferior format, and can be generated. 
+   Markdown is an inferior format, and can be generated.
 #+BEGIN_SRC emacs-lisp
 (require 'org-md)
 #+END_SRC
@@ -285,6 +285,13 @@
 #+BEGIN_SRC emacs-lisp
 (setq org-use-speed-commands t)
 #+END_SRC
+** Trailing whitespace
+   Removing trailing whitespace on save should be on by default. I've
+   been looking like a clueless moron
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either
@@ -301,24 +308,24 @@
   I used [[http://jonebird.com/2011/12/29/installing-emacs-v24-on-fedora/][this recipe]] to install the required packages for building
   emacs, installed my custom emacs into a non-standard location
   (/usr/local/emacs24) and used alternatives to swap emacs
-  implementation. 
+  implementation.
 
 
 ** Keeping files in sync is tricky
 
    By default, Emacs will not update the contents of open buffers when
    a file changes on disk. This is inconvenient when switching
-   branches in Git - as you'd risk editing stale buffers. 
+   branches in Git - as you'd risk editing stale buffers.
 
    This problem can be solved
 
 #+begin_src emacs-lisp
 (global-auto-revert-mode)
 #+end_src
-   
+
 
 ** Misc stuff
-   
+
    I'm lazy, didn't find a place to put this yet.
    - Use ruby-mode for Rakefiles
    - Use ruby-mode for Gemfiles
@@ -329,7 +336,7 @@
 (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 #+end_src
-   
+
 
 ** Other (contributed) libraries
 *** Expand region

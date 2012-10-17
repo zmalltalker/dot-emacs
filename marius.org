@@ -300,6 +300,28 @@
 (add-to-list 'load-path "~/.emacs.d/contrib/rinari")
 (require 'rinari)
 #+END_SRC
+** Email setup
+   I'm playing with Mutt as my MUA (with offlineimap for sync and
+   msmtp for sending mail). It's awesome.
+
+   I put "set editor=emacsclient -c" in my ~/.muttrc, which makes
+   emacsclient open a new graphical frame when I compose/reply
+   to/forward a message.
+
+   Set up mail mode when viewing a mutt buffer
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
+#+END_SRC
+
+   And of course I want auto-fill when writing email, and I want to
+   bind C-c C-c to server-edit, which finishes the editing session
+#+BEGIN_SRC emacs-lisp
+(defun zmalltalker-mail-mode-hook ()
+  (auto-fill-mode 1)
+  (local-set-key (kbd "C-c C-c") 'server-edit))
+
+(add-hook 'mail-mode-hook 'zmalltalker-mail-mode-hook)
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

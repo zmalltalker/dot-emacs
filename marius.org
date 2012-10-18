@@ -316,11 +316,17 @@
    And of course I want auto-fill when writing email, and I want to
    bind C-c C-c to server-edit, which finishes the editing session
 #+BEGIN_SRC emacs-lisp
-(defun zmalltalker-mail-mode-hook ()
-  (auto-fill-mode 1)
-  (local-set-key (kbd "C-c C-c") 'server-edit))
+  (defun zmalltalker-mail-mode-hook ()
+    (auto-fill-mode 1)
+    (local-set-key (kbd "C-c C-c")  (lambda ()
+           (interactive)
+           (save-buffer)
+           (server-edit))))
 
-(add-hook 'mail-mode-hook 'zmalltalker-mail-mode-hook)
+
+
+
+  (add-hook 'mail-mode-hook 'zmalltalker-mail-mode-hook)
 #+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this

@@ -1,0 +1,6 @@
+#name: p.
+#group : tags
+# --
+<p>
+  $2
+</p>

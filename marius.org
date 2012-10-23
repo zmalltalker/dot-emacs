@@ -19,6 +19,36 @@
   This file is loaded from init.el after any .org files in extras/
   This is because we want to be able to use libraries from there from this file.
 
+** Yasnippet
+   My home boy thomanil is watching over my shoulder as I install
+   Yasnippet for the umteenth time. Let's see:
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.6.1")
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/snippets")
+(setq yas/global-mode t)
+#+END_SRC
+
+   I'm not sure I'll keep this, but let's keep the man happy.
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (org-set-local 'yas/trigger-key [tab])
+              (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
+
+  (defun yas/org-very-safe-expand ()
+    (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
+
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (make-variable-buffer-local 'yas/trigger-key)
+              (setq yas/trigger-key [tab])
+              (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
+              (define-key yas/keymap [tab] 'yas/next-field)))
+
+#+END_SRC
 ** Ido
     Ido improves all kind of minibuffer activities:
     - find-file

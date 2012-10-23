@@ -4,7 +4,7 @@
   I use my setup with emacs 24.
 
 ** Where are the .el files?
-   
+
    You'll notice that this git repository doesn't include any .el
    files, except init.el. In fact, you'll find that .gitignore
    instructs Git to ignore several .el files.
@@ -14,7 +14,7 @@
    The first years I used Emacs, I kept my configuration in ~/.emacs -
    which soon became a mess. As I grew a bit more confident with
    emacs-lisp I split my single .emacs into several files, and
-   required these. 
+   required these.
 
    Then along came Textmate, and I pretty much forgot about Emacs
    until I discovered the Emacs starter kit which provided me with an
@@ -25,20 +25,15 @@
    be stuff in there that you don't understand. Since I don't like
    working with code I don't understand I stopped maintaining my Emacs
    configuratio, which means I don't use Emacs as efficently as I
-   could - which defeats the purpose of using Emacs. 
+   could - which defeats the purpose of using Emacs.
 
-   So I'm back to writing my Emacs configuration by hand. 
+   So I'm back to writing my Emacs configuration by hand.
 
 ** What was the problem?
 
    I'd put emacs-lisp comments in my .el files, but like all other
    comments you risk not updating them as you change stuff, and end up
    with comments that are obviously false:
-
-#+BEGIN_EXAMPLE
-;; I found some awesome javascript tools on the web
-(require 'yasnippets)
-#+END_EXAMPLE
 
    What can I say? This sucks.
 
@@ -78,11 +73,11 @@
 ** This happens, step by step
    - I start emacs, and it will by convention load ~/.emacs.d/init.el
    - init.el will load org-mode, I keep a local version checked out,
-     your Emacs version will probably have org-mode bundled. 
+     your Emacs version will probably have org-mode bundled.
    - init.el will call org-babel-load-file for any .org files in extras/
    - init.el will call org-babel-load-file for any .org files in
      ~/.emacs.d. In fact, the file you're reading right now will have
-     a corresponding .el file. 
+     a corresponding .el file.
    - I treat marius.org as my main configuration file. (I would make
      this a hyperlink, but you know ... later.)
 
@@ -92,9 +87,9 @@
    this file does not contain any begin_src instructions, a readme.el
    file would not be generated, and I'd get a load error when starting
    Emacs.
-   
+
    The only way I could think of to resolve this is to add an empty
    source block :-/
 #+begin_src emacs-lisp
-;; 
+;;
 #+end_src

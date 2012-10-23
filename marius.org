@@ -323,13 +323,8 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 ** Rinari
-   Rinari may be a bit ... much, but being able to switch from
-   implementation to test file is great.
-
-#+BEGIN_SRC emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/contrib/rinari")
-(require 'rinari)
-#+END_SRC
+   No fucking way. I'm leaving this trail behind just to remind me not
+   to do this again.
 ** Email setup
    I'm playing with Mutt as my MUA (with offlineimap for sync and
    msmtp for sending mail). It's awesome.

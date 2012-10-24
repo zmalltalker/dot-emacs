@@ -23,11 +23,10 @@
    My home boy thomanil is watching over my shoulder as I install
    Yasnippet for the umteenth time. Let's see:
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.6.1")
+(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.8.0")
 (require 'yasnippet)
-(yas/initialize)
+(yas/global-mode t)
 (yas/load-directory "~/.emacs.d/snippets")
-(setq yas/global-mode t)
 #+END_SRC
 
    I'm not sure I'll keep this, but let's keep the man happy.

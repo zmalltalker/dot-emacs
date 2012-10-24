@@ -1,5 +1,5 @@
 * Key bindings
-** Commenting 
+** Commenting
    I like to use C-x / for comment/uncommenting
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-x /") 'comment-or-uncomment-region)
@@ -10,7 +10,7 @@
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-x C-i") 'ido-goto-symbol)
 #+end_src
-   
+
 ** Enter key in ruby-mode
    When doing Ruby, bind <ret> to =reindent-then-newline-and-indent=
 
@@ -18,7 +18,7 @@
   (defun zmalltalker/ruby-comment-indent ()
     (comment-indent-new-line)
   )
-  (defun zmalltalker/ruby-indent () 
+  (defun zmalltalker/ruby-indent ()
     (reindent-then-newline-and-indent)
   )
   (defun zmalltalker/ruby-flexible-newline ()
@@ -37,7 +37,7 @@
      (looking-at "#")
      )
   )
-  
+
   (defun zmalltalker/ruby-config ()
     (local-set-key (kbd "RET") 'zmalltalker/ruby-flexible-newline)
   )
@@ -58,3 +58,5 @@
    [[file:tags.org::*Key%20bindings][Key bindings for tags]]
 ** Expand region
    [[file:~/.emacs.d/marius.org::*Expand%20region][Expand region]]
+** Open recent files
+   [[file:~/.emacs.d/marius.org::*Recent%20files][Recent files]]

@@ -322,6 +322,25 @@
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
+** Code cleanup
+   In order to have really neat source code, it sounds like a good
+   idea to have a single keystroke for cleaning up a file.
+
+   #+BEGIN_SRC emacs-lisp
+     (defun zmalltalker-clean-up-everything ()
+       "Perform housekeeping on the current buffer"
+       (interactive)
+       (save-excursion
+         (whitespace-cleanup)
+         (mark-whole-buffer)
+         (indent-region (point) (mark))
+         )
+       )
+   #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c n") 'zmalltalker-clean-up-everything)
+#+END_SRC
 ** Rinari
    No fucking way. I'm leaving this trail behind just to remind me not
    to do this again.
@@ -344,9 +363,9 @@
   (defun zmalltalker-mail-mode-hook ()
     (auto-fill-mode 1)
     (local-set-key (kbd "C-c C-c")  (lambda ()
-           (interactive)
-           (save-buffer)
-           (server-edit))))
+	   (interactive)
+	   (save-buffer)
+	   (server-edit))))
 
 
 

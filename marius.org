@@ -404,6 +404,18 @@
 
   (add-hook 'mail-mode-hook 'zmalltalker-mail-mode-hook)
 #+END_SRC
+** Multiple cursors
+   This makes me look as cool as Magnar.
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path (concat dotfiles-dir "/contrib/multiple-cursors"))
+  (require 'multiple-cursors)
+  ;; Select next/previous/all places like the current
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+  (global-set-key (kbd "C-S-c C-e") 'mc/edit-ends-of-lines)
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

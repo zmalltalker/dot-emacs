@@ -10,3 +10,6 @@
 [submodule "contrib/rinari"]
 	path = contrib/rinari
 	url = https://github.com/eschulte/rinari.git
+[submodule "contrib/multiple-cursors"]
+	path = contrib/multiple-cursors
+	url = https://github.com/magnars/multiple-cursors.el.git

@@ -416,6 +416,27 @@
 
   (global-set-key (kbd "C-S-c C-e") 'mc/edit-ends-of-lines)
 #+END_SRC
+** Goto line with feedback
+   M-g M-g is kind of boring; it could be helpful to turn on line
+   numbers while the prompt is being displayed. Here we go.
+
+#+BEGIN_SRC emacs-lisp
+  ;; turn line numbers off by default
+  (global-linum-mode -1)
+
+  (defun goto-line-with-feedback (&optional line)
+    "Show line numbers temporarily, while prompting for the line number input"
+    (interactive "P")
+    (if line
+        (goto-line line)
+      (unwind-protect
+          (progn
+            (linum-mode 1)
+            (goto-line (read-number "Goto line: ")))
+        (linum-mode -1))))
+  (global-set-key (vector 'remap 'goto-line) 'goto-line-with-feedback)
+
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

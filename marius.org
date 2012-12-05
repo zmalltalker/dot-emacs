@@ -415,6 +415,7 @@
   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
   (global-set-key (kbd "C-S-c C-e") 'mc/edit-ends-of-lines)
+  (global-set-key (kbd "C-S-c C-a") 'mc/edit-beginnings-of-lines)
 #+END_SRC
 ** Goto line with feedback
    M-g M-g is kind of boring; it could be helpful to turn on line

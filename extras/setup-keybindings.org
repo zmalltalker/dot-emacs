@@ -1,4 +1,27 @@
 * Key bindings
+** Windmove
+   Ye olde =C-x o= is kind of tired, I want to point in the direction
+   of the window instead. Windmove does this:
+
+#+BEGIN_SRC emacs-lisp
+  (windmove-default-keybindings)
+#+END_SRC
+*** Then how about org-mode and these?
+    Orgmode uses =S-arrow= for its thing, but I'd rather use =M= with
+    these:
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-shiftup-final-hook 'windmove-up)
+  (add-hook 'org-shiftleft-final-hook 'windmove-left)
+  (add-hook 'org-shiftdown-final-hook 'windmove-down)
+  (add-hook 'org-shiftright-final-hook 'windmove-right)
+  (setq org-replace-disputed-keys t)
+#+END_SRC
+** Increase/decrease text size
+   Use =C+= and =C-= to increase/decrease the text size
+#+BEGIN_SRC emacs-lisp
+(define-key global-map (kbd "C-+") 'text-scale-increase)
+(define-key global-map (kbd "C--") 'text-scale-decrease)
+#+END_SRC
 ** Commenting
    I like to use C-x / for comment/uncommenting
 #+begin_src emacs-lisp

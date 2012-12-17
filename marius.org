@@ -438,6 +438,81 @@
   (global-set-key (vector 'remap 'goto-line) 'goto-line-with-feedback)
 
 #+END_SRC
+** Mu4e
+   Trying out [[http://www.djcbsoftware.nl/code/mu/mu4e/index.html][mu4e]] for my email.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path (concat dotfiles-dir "contrib/mu4e"))
+  (require 'mu4e)
+  (setq mu4e-get-mail-command "offlineimap")
+  (setq mu4e-drafts-folder "/Gitorious/drafts")
+  (setq user-mail-address "marius@gitorious.com")
+  (setq message-kill-buffer-on-exit t)
+
+  ;; Shortcuts
+  (setq mu4e-maildir-shortcuts
+        '(("/Gitorious/inbox" . ?g)
+          ("/Gmail/inbox" . ?z)
+          ("/Shortcut/inbox" . ?s)))
+
+  ;; Smart refile locations
+      (setq mu4e-refile-folder
+         (lambda (msg)
+           (cond
+             ;; messages sent directly to me go to /archive
+             ;; also `mu4e-user-mail-address-regexp' can be used
+             ((mu4e-message-contact-field-matches msg :to "marius@gitorious")
+               "/Gitorious/archive")
+             ((mu4e-message-contact-field-matches msg :to "marius.mathiesen@gmail.com")
+               "/Gmail/archive")
+             ((mu4e-message-contact-field-matches msg :to "zmalltalker@zmalltalker.com")
+               "/Gmail/archive")
+             ((mu4e-message-contact-field-matches msg :to "marius@shortcut.no")
+               "/Shortcut/archive")
+             ;; everything else goes to /archive
+             ;; important to have a catch-all at the end!
+             (t  "/Gmail/archive"))))
+
+  ;; don't save message to Sent Messages, Gmail/IMAP takes care of this
+  (setq mu4e-sent-messages-behavior 'delete)
+
+
+  ;; Try to display images in mu4e
+  (setq
+   mu4e-view-show-images t
+   mu4e-view-image-max-width 800)
+
+  ;; sending mail
+  (setq message-send-mail-function 'message-send-mail-with-sendmail
+        sendmail-program "/usr/bin/msmtp"
+        user-full-name "Marius Mårnes Mathiesen")
+
+  ;; Borrowed from http://ionrock.org/emacs-email-and-mu.html
+  ;; Choose account label to feed msmtp -a option based on From header
+  ;; in Message buffer; This function must be added to
+  ;; message-send-mail-hook for on-the-fly change of From address before
+  ;; sending message since message-send-mail-hook is processed right
+  ;; before sending message.
+  (defun choose-msmtp-account ()
+    (if (message-mail-p)
+        (save-excursion
+          (let*
+              ((from (save-restriction
+                       (message-narrow-to-headers)
+                       (message-fetch-field "from")))
+               (account
+                (cond
+                 ((string-match "marius.mathiesen@gmail.com" from) "gmail")
+                 ((string-match "zmalltalker@zmalltalker.com" from) "gmail")
+                 ((string-match "marius@shortcut.no" from) "shortcut")
+                 ((string-match "marius@gitorious.com" from) "gitorious")
+                 ((string-match "marius@gitorious.org" from) "gitorious"))))
+            (setq message-sendmail-extra-arguments (list '"-a" account))))))
+  (setq message-sendmail-envelope-from 'header)
+  (add-hook 'message-send-mail-hook 'choose-msmtp-account)
+  (add-to-list 'mu4e-bookmarks
+               '("maildir:/Gitorious/inbox OR maildir:/Shortcut/inbox OR maildir:/Gmail/inbox flag:unread" "Today's news" ?z))
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

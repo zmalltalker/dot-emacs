@@ -24,7 +24,7 @@
   (require 'ob-tangle)
 )
 
-;; Load any libraries (anything in extras/*.org) first, so 
+;; Load any libraries (anything in extras/*.org) first, so
 ;; we can use it in our own files
 (setq zmalltalker-extras-dir (expand-file-name "extras" dotfiles-dir))
 (setq zmalltalker-extras-files (directory-files zmalltalker-extras-dir t "\\.org$"))
@@ -50,8 +50,11 @@ code blocks which can be tangled"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(coffee-command "/opt/node/bin/node /opt/node/bin/coffee")
+ '(coffee-tab-width 2)
  '(custom-safe-themes (quote ("501caa208affa1145ccbb4b74b6cd66c3091e41c5bb66c677feda9def5eab19c" "72cc9ae08503b8e977801c6d6ec17043b55313cda34bcf0e6921f2f04cf2da56" default)))
  '(make-backup-files nil)
+ '(mu4e-mu-binary "/opt/mu/bin/mu")
  '(org-babel-load-languages (quote ((emacs-lisp . t) (ruby . t))))
  '(org-confirm-babel-evaluate nil)
  '(show-paren-mode t))

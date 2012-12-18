@@ -533,20 +533,21 @@
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'mu4e-compose-pre-hook
-         (defun my-set-from-address ()
-           "Set the From address based on the To address of the original."
-           (let ((msg mu4e-compose-parent-message)) ;; msg is shorter...
-             (setq user-mail-address
-                   (cond
-                    ((mu4e-message-contact-field-matches msg :to "@gitorious")
-                     "marius@gitorious.com")
-                    ((mu4e-message-contact-field-matches msg :to "marius@shortcut.no")
-                     "marius@shortcut.no")
-                    ((mu4e-message-contact-field-matches msg :to "marius.mathiesen@gmail.com")
-                     "zmalltalker@zmalltalker.com")
-                    ((mu4e-message-contact-field-matches msg :to "zmalltalker@zmalltalker.com")
-                     "zmalltalker@zmalltalker.com")
-                    (t "marius.mathiesen@gmail.com"))))))
+            (defun my-set-from-address ()
+              "Set the From address based on the To address of the original."
+              (let ((msg mu4e-compose-parent-message)) ;; msg is shorter...
+                (if msg
+                    (setq user-mail-address
+                          (cond
+                           ((mu4e-message-contact-field-matches msg :to "@gitorious")
+                            "marius@gitorious.com")
+                           ((mu4e-message-contact-field-matches msg :to "marius@shortcut.no")
+                            "marius@shortcut.no")
+                           ((mu4e-message-contact-field-matches msg :to "marius.mathiesen@gmail.com")
+                            "zmalltalker@zmalltalker.com")
+                           ((mu4e-message-contact-field-matches msg :to "zmalltalker@zmalltalker.com")
+                            "zmalltalker@zmalltalker.com")
+                           (t "marius.mathiesen@gmail.com")))))))
 #+END_SRC
 *** Attaching files from dired
     Wouldn't it be awesome to be able to send files from dired using

@@ -451,7 +451,8 @@
   (setq mu4e-drafts-folder "/Gitorious/drafts")
   (setq user-mail-address "marius@gitorious.com")
   (setq message-kill-buffer-on-exit t)
-
+  ;; Use fancy chars
+  (setq mu4e-use-fancy-chars t)
   ;; Shortcuts
   (setq mu4e-maildir-shortcuts
         '(("/Gitorious/inbox" . ?g)
@@ -578,7 +579,15 @@
 
     With this, I can attach a file as an attachment to a new email
     message by entering =C-c RET C-a=, and I'm good to go.
+*** Automatically get new mail
+    Although =U= from the mu4e menu is simple, it's even better
+    (maybe) to have mu4e fetch mail (and update the mu index)
+    automatically. Simply set =mu4e-update-interval= to the number of
+    seconds between each check. Let's go with every 10 minutes.
 
+#+BEGIN_SRC emacs-lisp
+(setq mu4e-update-interval 600)
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

@@ -23,11 +23,11 @@
    My home boy thomanil is watching over my shoulder as I install
    Yasnippet for the umteenth time. Let's see:
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.8.0")
-(require 'yasnippet)
-(yas/global-mode t)
-(yas/load-directory "~/.emacs.d/snippets")
-(setq yas/global-mode t)
+  (add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.8.0")
+  (require 'yasnippet)
+  (yas/global-mode t)
+  (yas/load-directory "~/.emacs.d/snippets")
+  (setq yas/global-mode t)
 #+END_SRC
 
    I'm not sure I'll keep this, but let's keep the man happy.
@@ -526,6 +526,27 @@
   (add-to-list 'mu4e-bookmarks
                '("maildir:/Gmail/gitorious-ml flag:unread" "Unread on the mailing list" ?m))
 
+#+END_SRC
+*** Dynamic sender addresses
+    When replying to an email I want to use the address I received
+    this message to as the sender of the reply. This is fairly trivial:
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'mu4e-compose-pre-hook
+         (defun my-set-from-address ()
+           "Set the From address based on the To address of the original."
+           (let ((msg mu4e-compose-parent-message)) ;; msg is shorter...
+             (setq user-mail-address
+                   (cond
+                    ((mu4e-message-contact-field-matches msg :to "@gitorious")
+                     "marius@gitorious.com")
+                    ((mu4e-message-contact-field-matches msg :to "marius@shortcut.no")
+                     "marius@shortcut.no")
+                    ((mu4e-message-contact-field-matches msg :to "marius.mathiesen@gmail.com")
+                     "zmalltalker@zmalltalker.com")
+                    ((mu4e-message-contact-field-matches msg :to "zmalltalker@zmalltalker.com")
+                     "zmalltalker@zmalltalker.com")
+                    (t "marius.mathiesen@gmail.com"))))))
 #+END_SRC
 *** Attaching files from dired
     Wouldn't it be awesome to be able to send files from dired using

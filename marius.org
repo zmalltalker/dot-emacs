@@ -449,7 +449,8 @@
   (require 'mu4e)
   (setq mu4e-get-mail-command "offlineimap")
   (setq mu4e-drafts-folder "/Gitorious/drafts")
-  (setq user-mail-address "marius@gitorious.com")
+  (setq mu4e-user-mail-address-list (list "marius@shortcut.no" "marius@gitorious.org" "zmalltalker@zmalltalker.com" "marius.mathiesen@gmail.com" "marius@gitorious.com"))
+  ;;  (setq user-mail-address-list "marius@gitorious.com")
   (setq message-kill-buffer-on-exit t)
   ;; Use fancy chars
   (setq mu4e-use-fancy-chars t)
@@ -462,22 +463,22 @@
           ))
 
   ;; Smart refile locations
-      (setq mu4e-refile-folder
-         (lambda (msg)
-           (cond
-             ;; messages sent directly to me go to /archive
-             ;; also `mu4e-user-mail-address-regexp' can be used
-             ((mu4e-message-contact-field-matches msg :to "marius@gitorious")
-               "/Gitorious/archive")
-             ((mu4e-message-contact-field-matches msg :to "marius.mathiesen@gmail.com")
-               "/Gmail/archive")
-             ((mu4e-message-contact-field-matches msg :to "zmalltalker@zmalltalker.com")
-               "/Gmail/archive")
-             ((mu4e-message-contact-field-matches msg :to "marius@shortcut.no")
-               "/Shortcut/archive")
-             ;; everything else goes to /archive
-             ;; important to have a catch-all at the end!
-             (t  "/Gmail/archive"))))
+  (setq mu4e-refile-folder
+        (lambda (msg)
+          (cond
+           ;; messages sent directly to me go to /archive
+           ;; also `mu4e-user-mail-address-regexp' can be used
+           ((mu4e-message-contact-field-matches msg :to "marius@gitorious")
+            "/Gitorious/archive")
+           ((mu4e-message-contact-field-matches msg :to "marius.mathiesen@gmail.com")
+            "/Gmail/archive")
+           ((mu4e-message-contact-field-matches msg :to "zmalltalker@zmalltalker.com")
+            "/Gmail/archive")
+           ((mu4e-message-contact-field-matches msg :to "marius@shortcut.no")
+            "/Shortcut/archive")
+           ;; everything else goes to /archive
+           ;; important to have a catch-all at the end!
+           (t  "/Gmail/archive"))))
 
   ;; don't save message to Sent Messages, Gmail/IMAP takes care of this
   (setq mu4e-sent-messages-behavior 'delete)
@@ -497,7 +498,7 @@
   (setq mu4e-confirm-quit nil
         mu4e-headers-date-format "%d/%b/%Y %H:%M" ; date format
         mu4e-html2text-command "html2text -utf8 -width 72"
-  )
+        )
 
   ;; Borrowed from http://ionrock.org/emacs-email-and-mu.html
   ;; Choose account label to feed msmtp -a option based on From header

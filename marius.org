@@ -204,7 +204,17 @@
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 #+end_src
 
+** Update PATH
+   I need (among others?) node on my PATH within Emacs
+#+BEGIN_SRC emacs-lisp
+(setenv "PATH"
+  (concat
+   "/opt/node/bin:"
+   (getenv "PATH")
+  )
+)
 
+#+END_SRC
 ** Packages
 
    Emacs 24 ships with a package system, which is great.

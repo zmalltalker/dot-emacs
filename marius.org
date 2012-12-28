@@ -253,6 +253,18 @@
 (global-set-key (kbd "C-x m") 'magit-status)
 #+end_src
 
+** Add a little formatting to done headlines in org-mode
+   Picked up this little nugget from [[http://sachachua.com/blog/2012/12/emacs-strike-through-headlines-for-done-tasks-in-org/][this blog post.]]
+#+BEGIN_SRC emacs-lisp
+  (setq org-fontify-done-headline t)
+  (custom-set-faces
+   '(org-done ((t (:foreground "PaleGreen"
+                   :weight normal
+                   :strike-through t))))
+   '(org-headline-done
+              ((((class color) (min-colors 16) (background dark))
+                 (:foreground "LightSalmon" :strike-through t)))))
+#+END_SRC
 ** Recent files
    Support open-recent-file. This needs some work.
 

@@ -645,6 +645,16 @@
   (global-set-key (kbd "C-x M") 'mu4e-up-to-date-status)
 #+END_SRC
 
+** Org-agenda setup
+   Which org-files are included in the agenda?
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-files '("~/Dropbox/dotfiles/orgfiles/today.org"))
+#+END_SRC
+
+   Let's bind =C-c a= to =org-agenda=
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c a") 'org-agenda)
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

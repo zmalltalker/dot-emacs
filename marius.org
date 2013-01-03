@@ -655,6 +655,10 @@
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c a") 'org-agenda)
 #+END_SRC
+
+   Key bindings when using =org-schedule= (the little calendar thingie):
+   - =M-+= / =M--=: next/previous day
+   - =+[0-9]=: _n_ days from today
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

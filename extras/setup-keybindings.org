@@ -14,7 +14,7 @@
   (add-hook 'org-shiftleft-final-hook 'windmove-left)
   (add-hook 'org-shiftdown-final-hook 'windmove-down)
   (add-hook 'org-shiftright-final-hook 'windmove-right)
-  (setq org-replace-disputed-keys t)
+;;  (setq org-replace-disputed-keys t)
 #+END_SRC
 ** Increase/decrease text size
    Use =C+= and =C-= to increase/decrease the text size

@@ -641,7 +641,7 @@
     (kill-buffer)
     (jump-to-register :mu4e-fullscreen))
 
-  (define-key mu4e-main-mode-map (kbd "Q") 'mu4e-quit-session)
+  (define-key mu4e-main-mode-map (kbd "q") 'mu4e-quit-session)
   (global-set-key (kbd "C-x M") 'mu4e-up-to-date-status)
 #+END_SRC
 

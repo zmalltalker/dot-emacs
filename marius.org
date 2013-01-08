@@ -726,8 +726,9 @@
 
 
 ** Misc stuff
+*** Ruby mappings
 
-   I'm lazy, didn't find a place to put this yet.
+    I'm lazy, didn't find a place to put this yet.
    - Use ruby-mode for Rakefiles
    - Use ruby-mode for Gemfiles
    - Bind C-x / to comment-or-uncomment-region
@@ -738,6 +739,36 @@
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 #+end_src
 
+*** Encryption in org-mode
+    Stolen from http://orgmode.org/worg/org-tutorials/encrypting-files.html
+    First of all, let's require it
+#+BEGIN_SRC emacs-lisp
+(require 'org-crypt)
+#+END_SRC
+
+    Next, set up which GPG key to use for encryption.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-crypt-key "marius@gitorious.com")
+#+END_SRC
+
+    To encrypt an entry, simply use =org-encrypt-entry=, like has been
+    done in the next paragraph.
+
+**** This is invisible
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+hQEMA9BzRTS1G1TnAQf+PJ4Fg+vKtl+GvIwPToLvvWaioLgRnQWy8nW19dhb5KMm
+XglCL558cM9jZrYpTPgQpCMlQ1D7h1rPl3WxQh9gcYHcMrCgsHmhHss2sN0eYxrE
+TuSRJVCqtCfmkAptHjF5YoGEw7rd90AgChLBGnR7BgM0AFAXWqelmZkoo44tFqvZ
+JrppMTMPOd9l625CT7Az6ppYhEBosR1pBMx1/AFZ+KL2kPLf0LZ69aHGpvojQTRq
+L9dR9u72vjyVc7UNYthhKOL1ISTPuI9L8Zu8vcOJ8O3VQ01Lg2kTsT4BLjjjc0N4
+CE9hlwcTrz8z+yMdiVlc74hLZmu9ND0jDh1CtABQ6dJVAfURUptO6r2/P1ubuG1I
+HCrVdQr2EMMK9ZOMdmZC4w6M/yh6Z6Svxo1NOsy8QzOj/dZzM7ytmikpDduv5xGn
+KUQSxb7v1Cwm+1jWP/AAua9QCTiOjA==
+=1cu5
+-----END PGP MESSAGE-----
 
 ** Other (contributed) libraries
 *** Expand region

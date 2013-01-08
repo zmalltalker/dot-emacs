@@ -754,7 +754,6 @@
 
     To encrypt an entry, simply use =org-encrypt-entry=, like has been
     done in the next paragraph.
-
 **** This is invisible
 -----BEGIN PGP MESSAGE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
@@ -792,6 +791,16 @@ KUQSxb7v1Cwm+1jWP/AAua9QCTiOjA==
 (require 'puppet-mode)
 (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 #+end_src
+*** Browser
+    I can't believe I have to run through these hoops just to launch a
+    browser. Oh well
+#+BEGIN_SRC emacs-lisp
+(setq browse-url-generic-program
+          (substring (shell-command-to-string "gconftool-2 -g /desktop/gnome/applications/browser/exec") 0 -1)
+          browse-url-browser-function 'browse-url-generic)
+#+END_SRC
+
+    So I can visit http://zmalltalker.com/
 ** Gitorious stuff
    I'm working on an Emacs thing for merge requests.
 #+begin_src emacs-lisp

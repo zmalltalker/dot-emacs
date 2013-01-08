@@ -645,6 +645,19 @@
   (global-set-key (kbd "C-x M") 'mu4e-up-to-date-status)
 #+END_SRC
 
+*** Org integration
+    In order to use org "minor" mode when composing (awesome!) and store links to messages:
+    - to a message from message view
+    - to a query in headers view
+#+BEGIN_SRC emacs-lisp
+(require 'org-mu4e)
+#+END_SRC
+
+    To edit messages in org-mode, enter =C-c o= to enable org-mode inside the message.
+#+BEGIN_SRC emacs-lisp
+(define-key mu4e-compose-mode-map (kbd "C-c o") 'org-mu4e-compose-org-mode)
+#+END_SRC
+
 ** Org-agenda setup
    Which org-files are included in the agenda?
 #+BEGIN_SRC emacs-lisp
@@ -660,6 +673,26 @@
    - =M-+= / =M--=: next/previous day
    - =+[0-9]=: _n_ days from today
    - =M-n= / =M-p=: next/previous week
+** Unfill paragraphs for export to Wordpress etc
+   I use org-mode for authoring (naturally). However, tools like the WYSIWYG
+   editor on wordpress creates paragraphs for newlines (YUCK!). Support creating
+   really long lines.
+#+BEGIN_SRC emacs-lisp
+  (defun zmalltalker/wordpress-uglify (start end)
+    (interactive "r")
+    (let ((fc fill-column))
+      (setq fill-column 999999999)
+      (fill-region-as-paragraph start end)
+      (setq fill-column fc)
+      (copy-region-as-kill start end)
+))
+#+END_SRC
+
+   Since I use =C-_= for undo, I'll rebind this function to =C-x u=.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-x u") 'zmalltalker/wordpress-uglify)
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

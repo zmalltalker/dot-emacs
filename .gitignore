@@ -11,3 +11,4 @@ auto-save-list/*
 /extras/setup-keybindings.el
 session.*
 url
+*elc

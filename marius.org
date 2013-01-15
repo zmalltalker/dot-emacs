@@ -23,30 +23,30 @@
    My home boy thomanil is watching over my shoulder as I install
    Yasnippet for the umteenth time. Let's see:
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.8.0")
-  (require 'yasnippet)
-  (yas/global-mode t)
-  (yas/load-directory "~/.emacs.d/snippets")
-  (setq yas/global-mode t)
+  ;; (add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.8.0")
+  ;; (require 'yasnippet)
+  ;; (yas/global-mode t)
+  ;; (yas/load-directory "~/.emacs.d/snippets")
+  ;; (setq yas/global-mode t)
 #+END_SRC
 
    I'm not sure I'll keep this, but let's keep the man happy.
 
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (org-set-local 'yas/trigger-key [tab])
-              (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
+  ;; (add-hook 'org-mode-hook
+  ;;           (lambda ()
+  ;;             (org-set-local 'yas/trigger-key [tab])
+  ;;             (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
 
-  (defun yas/org-very-safe-expand ()
-    (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
+  ;; (defun yas/org-very-safe-expand ()
+  ;;   (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
 
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (make-variable-buffer-local 'yas/trigger-key)
-              (setq yas/trigger-key [tab])
-              (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
-              (define-key yas/keymap [tab] 'yas/next-field)))
+  ;; (add-hook 'org-mode-hook
+  ;;           (lambda ()
+  ;;             (make-variable-buffer-local 'yas/trigger-key)
+  ;;             (setq yas/trigger-key [tab])
+  ;;             (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
+  ;;             (define-key yas/keymap [tab] 'yas/next-field)))
 
 #+END_SRC
 ** Ido
@@ -147,6 +147,18 @@
                :base-extension "jpg\\|gif\\|png"
                :publishing-directory "/ssh:friskbris.no:/var/www/zmalltalker.com/images/"
                :publishing-function org-publish-attachment)
+            ("bolig"
+               :base-directory "/home/marius/Dropbox/dotfiles/orgfiles/bolig/"
+               :publishing-directory "/home/marius/Dropbox/Public/Laarhalsen"
+               :headline-levels 3
+               :recursive t
+               :table-of-contents nil
+               :html-preamble nil
+               :html-postamble nil
+               :body-only t
+               :section-numbers nil
+               :auto-sitemap t
+               )
   ))
 #+end_src
 
@@ -693,6 +705,53 @@
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-x u") 'zmalltalker/wordpress-uglify)
+#+END_SRC
+** Publishing snippets
+   Blatantly stolen from https://github.com/magnars/.emacs.d/blob/master/users/fimasvee/my-defuns.el
+#+BEGIN_SRC emacs-lisp
+  (defun buffer-file-name-body ()
+    "Buffer file name stripped of directory and extension"
+    (if (buffer-file-name)
+        (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))
+      (cadr (reverse (split-string (dired-current-directory) "/")))))
+
+  (defun wte--unique-filename (stub &optional index)
+    (setq index (or index 1))
+    (let ((filename (concat "~/Projects/snippets/"
+                            stub
+                            ".el"
+                            (if (< index 10) "-0" "-")
+                            (number-to-string index)
+                            ".html")))
+      (if (file-exists-p filename)
+          (wte--unique-filename stub (1+ index))
+        filename)))
+
+  (defun zmalltalker-publish-snippet (beg end)
+    "Create a blog post containing the syntax highlighted code in selection"
+    (interactive "r")
+    (let* ((htmlized-reg (htmlize-region-for-paste beg end))
+           (filename (wte--unique-filename (buffer-file-name-body)))
+           (header (format "<!DOCTYPE html>
+  <html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">
+  <head>
+  <link type=\"text/css\" media=\"screen\" href=\"stylesheets/app.css\" rel=\"stylesheet\" />
+  <title>Zmalltalker's snippets: %s</title>
+  </head>
+  <body>" (file-name-nondirectory (buffer-file-name))))
+           (footer "</body>
+  </html>")
+           )
+      (find-file filename)
+      (html-mode)
+      (save-excursion
+        (insert header)
+        (insert htmlized-reg)
+        (insert footer)
+        )
+  ))
+
+
 #+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this

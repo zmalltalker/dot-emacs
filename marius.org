@@ -753,6 +753,39 @@
 
 
 #+END_SRC
+** Clojure REPL
+   Looks like [[https://github.com/kingtim/nrepl.el][nrepl.el]] is the way to go. First of all, set up the
+   melpa repo:
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+#+END_SRC
+
+   nrepl.el lets you start a repl server from within Emacs, which is
+   awesome. To try it out, simply use Leiningen to create a new project
+
+#+BEGIN_EXAMPLE
+lein new demo
+cd omg
+e src/omg/core.clj
+#+END_EXAMPLE
+
+   Now with that running, start the repl from Emacs with =M-x
+   nrepl-jack-in= and wait for the repl to appear. Once inside, try:
+
+#+BEGIN_SRC clojure
+(require '[omg.core :as omg])
+(omg/foo "Sure")
+#+END_SRC
+
+   And once this is running, use the familiar =C-x C-e= to evaluate
+   Clojure code so it's visible within the REPL. And =M-TAB= completes
+   symbols. It's all really wonderful. Oh, and =C-up= and =C-down=
+   walks the history.
+
+   To quit, run =M-x repl-quit=.
+
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

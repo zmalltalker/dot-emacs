@@ -679,6 +679,31 @@
 (define-key mu4e-compose-mode-map (kbd "C-c o") 'org-mu4e-compose-org-mode)
 #+END_SRC
 
+*** Encryption in email
+    Enable =epa-mail-mode= when composing messages:
+
+#+BEGIN_SRC
+(add-hook 'mu4e-compose-mode-hook
+   (defun my-setup-epa-hook ()
+     (epa-mail-mode)))
+#+END_SRC
+
+    Now, when composing a message, use:
+    * =C-c C-e s= to sign a message.
+    * =C-c C-e e= to encrypt a message
+
+    Let's enable it in =mu4e-view-mode= as well:
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'mu4e-view-mode-hook
+  (defun my-view-mode-hook ()
+   (epa-mail-mode)))
+#+END_SRC
+
+    Now, when viewing a message, enter:
+    * =C-c C-e v= to verify a signature
+    * =C-c C-e d= to decrypt a message
+
 ** Org-agenda setup
    Which org-files are included in the agenda?
 #+BEGIN_SRC emacs-lisp

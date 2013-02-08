@@ -34,7 +34,6 @@
 (require 'mu4e-actions)
 (require 'mu4e-message)
 
-(require 'longlines)
 (require 'comint)
 (require 'browse-url)
 (require 'button)
@@ -44,17 +43,19 @@
 (eval-when-compile (byte-compile-disable-warning 'cl-functions))
 (require 'cl)
 
+
 ;; the message view
 (defgroup mu4e-view nil
   "Settings for the message view."
   :group 'mu4e)
 
 (defcustom mu4e-view-fields
-  '(:from :to  :cc :subject :flags :date :maildir :tags :attachments :signature)
+  '(:from :to  :cc :subject :flags :date :maildir :mailing-list :tags :attachments :signature)
   "Header fields to display in the message view buffer.
 For the complete list of available headers, see `mu4e-header-info'."
   :type (list 'symbol)
   :group 'mu4e-view)
+
 
 (defcustom mu4e-view-show-addresses nil
   "Whether to initially show full e-mail addresses for contacts in
@@ -76,7 +77,7 @@ In the format of `format-time-string'."
 (defcustom mu4e-view-image-max-width 800
   "The maximum width for images to display.
 This is only effective if you're using an emacs with Imagemagick
-support, and `mu4e-show-image' is non-nil."
+support, and `mu4e-view-show-images' is non-nil."
   :group 'mu4e-view)
 
 (defcustom mu4e-view-scroll-to-next t
@@ -143,7 +144,7 @@ messages - for example, `mu4e-org'."
   ;; not, when the policy is 'ask'. we simply assume the user said yes...  the
   ;; alternative would be to ask for each message, encrypted or not.  maybe we
   ;; need an extra policy...
-  (mu4e~proc-view msgid mu4e-show-images mu4e-decryption-policy))
+  (mu4e~proc-view msgid mu4e-view-show-images mu4e-decryption-policy))
 
 
 (defun mu4e-view-message-text (msg)
@@ -181,6 +182,8 @@ messages - for example, `mu4e-org'."
 	    ;; size
 	    (:size
 	      (mu4e~view-construct-header field (mu4e-display-size fieldval)))
+	    (:mailing-list
+	      (mu4e~view-construct-header field fieldval))
 	    ;; attachments
 	    (:attachments (mu4e~view-construct-attachments-header msg))
 	    ;; pgp-signatures
@@ -441,31 +444,6 @@ at POINT, or if nil, at (point)."
     (when attachments
       (mu4e~view-construct-header :attachments attstr t))))
 
-;; (defun mu4e~decrypt-parts-maybe ()
-;;   "Decrypt maybe; depends on whether there are any such parts
-;; and the value of `mu4e-view-decrypt-parts'."
-;;   (interactive)
-;;   (let ((str "") (msg (mu4e-message-at-point)))
-;;     (mu4e-view-for-each-part msg
-;;       (lambda (msg part)
-;; 	(when (member 'encrypted (mu4e-message-part-field part :type))
-;; 	  (let ((file (mu4e-message-part-field part :temp)))
-;; 	    (when (and file (file-exists-p file))
-;; 	      ;; if our mu-server was build with crypto support, we only use EPA
-;; 	      ;; to push the password into gpg's memory
-;; 	      (let* ((decr
-;; 		       (condition-case nil
-;; 			 (epg-decrypt-file (epg-make-context epa-protocol)
-;;                                         file nil)
-;; 			 (err (mu4e-error "Decryption failed: %S" err))))
-;; 		      (decr
-;; 			(if (and decr (plist-get mu4e~server-props :crypto))
-
-;; 			  )))) ;; TODO: reload message
-;; 			 ;; otherwise, we try to handle it here.
-;; 			 )
-;; 		decr))))))
-
 (defun mu4e-view-for-each-part (msg func)
   "Apply FUNC to each part in MSG.
 FUNC should be a function taking two arguments:
@@ -520,24 +498,24 @@ FUNC should be a function taking two arguments:
       (define-key map "|" 'mu4e-view-pipe)
       (define-key map "a" 'mu4e-view-action)
 
+      ;; toggle header settings
+      (define-key map "O" 'mu4e-headers-change-sorting)
+      (define-key map "P" 'mu4e-headers-toggle-threading)
+      (define-key map "Q" 'mu4e-headers-toggle-full-search)
+      (define-key map "W" 'mu4e-headers-toggle-include-related)
+     
       ;; change the number of headers
-      (define-key map (kbd "C-+") 'mu4e-headers-split-view-resize)
-      (define-key map (kbd "C--")
-	(lambda () (interactive) (mu4e-headers-split-view-resize -1)))
-      (define-key map (kbd "<C-kp-add>") 'mu4e-headers-split-view-resize)
-      (define-key map (kbd "<C-kp-subtract>")
-	(lambda () (interactive) (mu4e-headers-split-view-resize -1)))
+      (define-key map (kbd "C-+") 'mu4e-headers-split-view-grow)
+      (define-key map (kbd "C--") 'mu4e-headers-split-view-shrink)
+      (define-key map (kbd "<C-kp-add>") 'mu4e-headers-split-view-grow)
+      (define-key map (kbd "<C-kp-subtract>") 'mu4e-headers-split-view-shrink)
 
       ;; intra-message navigation
       (define-key map (kbd "SPC") 'mu4e-view-scroll-up-or-next)
-      (define-key map (kbd "<home>")
-	#'(lambda () (interactive) (goto-char (point-min))))
-      (define-key map (kbd "<end>")
-	#'(lambda () (interactive) (goto-char (point-max))))
-      (define-key map (kbd "RET")
-	#'(lambda () (interactive) (scroll-up 1)))
-      (define-key map (kbd "<backspace>")
-	#'(lambda () (interactive) (scroll-up -1)))
+      (define-key map (kbd "<home>") 'beginning-of-buffer)
+      (define-key map (kbd "<end>") 'end-of-buffer)
+      (define-key map (kbd "RET") 'mu4e-scroll-up)
+      (define-key map (kbd "<backspace>") 'mu4e-scroll-up)
 
       ;; navigation between messages
       (define-key map "p" 'mu4e-view-headers-prev)
@@ -578,7 +556,7 @@ FUNC should be a function taking two arguments:
       (define-key map (kbd "#") 'mu4e-mark-resolve-deferred-marks)
 
       ;; misc
-      (define-key map "w" 'longlines-mode)
+      (define-key map "w" 'visual-line-mode)
       (define-key map "h" 'mu4e-view-toggle-hide-cited)
 
       ;; next 3 only warn user when attempt in the message view
@@ -600,7 +578,7 @@ FUNC should be a function taking two arguments:
 
 	(define-key menumap [sepa0] '("--"))
 	(define-key menumap [wrap-lines]
-	  '("Toggle wrap lines" . longlines-mode))
+	  '("Toggle wrap lines" . visual-line-mode))
 	(define-key menumap [hide-cited]
 	  '("Toggle hide cited" . mu4e-view-toggle-hide-cited))
 	(define-key menumap [raw-view]
@@ -656,6 +634,12 @@ FUNC should be a function taking two arguments:
 
 (fset 'mu4e-view-mode-map mu4e-view-mode-map)
 
+(defcustom mu4e-view-mode-hook nil
+  "Hook run when entering Mu4e-View mode."
+  :options '(turn-on-visual-line-mode)
+  :type 'hook
+  :group 'mu4e-view)
+
 (defvar mu4e-view-mode-abbrev-table nil)
 (define-derived-mode mu4e-view-mode special-mode "mu4e:view"
   "Major mode for viewing an e-mail message in mu4e.
@@ -697,7 +681,7 @@ If the message is not New/Unread, do nothing."
 	  ;; prefixes, starting with 0 for 'no citation'
 	  (beginning-of-line 1)
 	  ;; consider only lines that heuristically look like a citation line...
-	  (when (looking-at "[[:blank:]]*[^[:blank:]]*[[:blank:]]*>")
+	  (when (looking-at "[[:blank:]]*[^[:blank:]\n]*[[:blank:]]*>")
 	    (let* ((level (how-many ">" (line-beginning-position 1)
 			    (line-end-position 1)))
 		    (face
@@ -740,7 +724,7 @@ What browser is called is depending on
 
 (defun mu4e~view-show-images-maybe (msg)
   "Show attached images, if `mu4e-show-images' is non-nil."
-  (when (and (display-images-p) mu4e-show-images)
+  (when (and (display-images-p) mu4e-view-show-images)
     (mu4e-view-for-each-part msg
       (lambda (msg part)
 	(when (string-match "^image/" (mu4e-message-part-field part :mime-type))
@@ -1059,7 +1043,7 @@ attachments) in response to a (mu4e~proc-extract 'temp ... )."
       ;; remember the mapping path->docid, which maps the path of the embedded
       ;; message to the docid of its parent
       (puthash path docid mu4e~path-parent-docid-map)
-      (mu4e~proc-view-path path mu4e-show-images mu4e-decryption-policy))
+      (mu4e~proc-view-path path mu4e-view-show-images mu4e-decryption-policy))
     ((string= what "emacs")
       (find-file path)
       ;; make the buffer read-only since it usually does not make
@@ -1087,6 +1071,16 @@ anymore, go the next message."
     (error
       (when mu4e-view-scroll-to-next
 	(mu4e-view-headers-next)))))
+
+(defun mu4e-scroll-up ()
+  "Scroll text of selected window up one line."
+  (interactive)
+  (scroll-up 1))
+
+(defun mu4e-scroll-down ()
+  "Scroll text of selected window down one line."
+  (interactive)
+  (scroll-down 1))
 
 (defun mu4e-view-unmark-all ()
   "If we're in split-view, unmark all messages.

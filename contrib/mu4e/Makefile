@@ -129,9 +129,10 @@ am__uninstall_files_from_dir = { \
 dist_lispLISP_INSTALL = $(INSTALL_DATA)
 LISP = $(dist_lisp_LISP)
 am__ELFILES = mu4e-about.el mu4e-actions.el mu4e-compose.el \
-	mu4e-draft.el mu4e-headers.el mu4e-main.el mu4e-mark.el \
-	mu4e-message.el mu4e-meta.el mu4e-proc.el mu4e-speedbar.el \
-	mu4e-utils.el mu4e-vars.el mu4e-view.el mu4e.el org-mu4e.el
+	mu4e-draft.el mu4e-headers.el mu4e-lists.el mu4e-main.el \
+	mu4e-mark.el mu4e-message.el mu4e-meta.el mu4e-proc.el \
+	mu4e-speedbar.el mu4e-utils.el mu4e-vars.el mu4e-view.el \
+	mu4e.el org-mu4e.el
 am__ELCFILES = $(am__ELFILES:.el=.elc)
 ELCFILES = $(LISP:.el=.elc)
 elisp_comp = $(top_srcdir)/elisp-comp
@@ -207,8 +208,8 @@ GLIB_LIBS = -lgobject-2.0 -lglib-2.0
 GMIME_CFLAGS = -D_LARGEFILE64_SOURCE -pthread -I/usr/include/gmime-2.6 -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include  
 GMIME_LIBS = -lgmime-2.6 -lgio-2.0 -lgobject-2.0 -lglib-2.0  
 GREP = /usr/bin/grep
-GTK_CFLAGS = -pthread -I/usr/include/gtk-2.0 -I/usr/lib64/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng15  
-GTK_LIBS = -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgio-2.0 -lpangoft2-1.0 -lpangocairo-1.0 -lgdk_pixbuf-2.0 -lcairo -lpango-1.0 -lfreetype -lfontconfig -lgobject-2.0 -lglib-2.0  
+GTK_CFLAGS = 
+GTK_LIBS = 
 GUILE_BINARY = 
 GUILE_CFLAGS = 
 GUILE_LIBS = 
@@ -239,10 +240,10 @@ OTOOL64 =
 PACKAGE = mu
 PACKAGE_BUGREPORT = http://code.google.com/p/mu0/issues/list
 PACKAGE_NAME = mu
-PACKAGE_STRING = mu 0.9.9.5-dev4
+PACKAGE_STRING = mu 0.9.9.5-dev6
 PACKAGE_TARNAME = mu
 PACKAGE_URL = 
-PACKAGE_VERSION = 0.9.9.5-dev4
+PACKAGE_VERSION = 0.9.9.5-dev6
 PATH_SEPARATOR = :
 PKG_CONFIG = /usr/bin/pkg-config
 PKG_CONFIG_LIBDIR = 
@@ -254,7 +255,7 @@ SET_MAKE =
 SHELL = /bin/sh
 SORT = sort
 STRIP = strip
-VERSION = 0.9.9.5-dev4
+VERSION = 0.9.9.5-dev6
 WEBKIT_CFLAGS = 
 WEBKIT_LIBS = 
 XAPIAN_CONFIG = xapian-config
@@ -325,6 +326,7 @@ dist_lisp_LISP = \
 	mu4e-compose.el		\
 	mu4e-draft.el		\
 	mu4e-headers.el		\
+	mu4e-lists.el		\
 	mu4e-main.el		\
 	mu4e-mark.el		\
 	mu4e-message.el         \

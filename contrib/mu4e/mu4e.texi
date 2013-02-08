@@ -28,7 +28,7 @@ Documentation License.''
 
 @titlepage
 @title @t{mu4e} - an e-mail client for emacs
-@subtitle{version  @value{mu-version}}
+@subtitle version  @value{mu-version}
 @author Dirk-Jan C. Binnema
 
 @c The following two commands start the copyright page.
@@ -770,7 +770,8 @@ M-right      next query
 O            change sort order
 P            toggle threading
 Q            toggle full-search
-
+V            toggle skip-duplicates
+W            toggle include-related
 
 marking
 -------
@@ -1149,7 +1150,7 @@ decryption of encrypted messages, as well as verification of signatures. For
 signing/encrypting messages your outgoing messages, see @ref{Signing and
 encrypting}.
 
-Currently, only PGP/MIME is supported; PGP-inline and S/MIME are not. 
+Currently, only PGP/MIME is supported; PGP-inline and S/MIME are not.
 
 For all of this to work, @command{gpg-agent} must be running, and it must set
 the environment variable @t{GPG_AGENT_INFO}. You can check from
@@ -1159,7 +1160,7 @@ In many mainstream Linux/Unix desktop environments, everything works
 out-of-the-box, but if your environment does not automatically start
 @command{gpg-agent}, you can do so by hand:
 @verbatim
-$ eval $(gpg-agent --daemon) 
+$ eval $(gpg-agent --daemon)
 @end verbatim
 
 @noindent
@@ -1469,7 +1470,7 @@ configuration:
 executing a query for messages that happen to have the property of being in a
 certain folder.
 
-By default, queries return up to @code{mu4e-search-results-limit} (default:
+Normally, queries return up to @code{mu4e-headers-results-limit} (default:
 500) results. That is usually more than enough, and makes things significantly
 faster. Sometimes, however, you may want to show @emph{all} results; you can
 enable this with @kbd{M-x mu4e-headers-toggle-full-search}, or by customizing
@@ -1673,7 +1674,7 @@ jumping to a maildir (@kbd{M-x mu4e-headers-jump-to-maildir}, @key{j}) or
 because you followed some bookmark (@kbd{M-x mu4e-headers-search-bookmark},
 @key{b}). Now, you want to narrow things down to only those messages that have
 attachments.
-
+1
 This is when @kbd{M-x mu4e-headers-search-narrow} (@key{/}) comes in handy. It
 asks for an additional search pattern, which is appended to the current search
 query, in effect getting you the subset of the currently shown headers that
@@ -1682,7 +1683,31 @@ query, so, effectively 'widens' the search. Technically, narrowing the results
 of query @t{x} with expression @t{y} implies doing a search @t{(x) AND y}.
 
 Note, messages that were not in your in your original search results because
-of @code{mu4e-search-results-limit}, may show up in the narrowed query.
+of @code{mu4e-headers-results-limit}, may show up in the narrowed query.
+
+@subsection Including related messages
+@anchor{Including related messages}
+
+It can be useful to not only show the messages that directly match a certain
+query, but also include messages that are related to these messages. That is,
+messages that belong to the same discussion thread are included in the
+results, just like e.g. Gmail does it. You can enable this behavior by setting
+@code{mu4e-headers-include-related} to @code{t}, and you can toggle between
+including/not-including with @key{W}.
+
+@subsection Skipping duplicates
+@anchor{Skipping duplicates}
+
+Another useful features is skipping duplicate messages. When you have copies
+of messages, there's usually little value in including more than one in search
+results. A common reason for having multiple copies of messages in the
+combination of Gmail and @t{offlineimap}, since that is the way the labels /
+virtual folders in Gmail are represented. You can enable skipping duplicates
+by setting @code{mu4e-headers-skip-duplicates} to @code{t}, and you can toggle
+between the skipping/not skipping with @key{V}.
+
+Note, messages are considered duplicates when they have the same
+@t{Message-Id}.
 
 @node Marking
 @chapter Marking
@@ -1886,6 +1911,12 @@ message. An example should clarify this:
       ((string-match "football\\|soccer"
         (mu4e-message-field msg :subject))
         "/football")
+      ;; messages sent by me go to the sent folder
+      ((find-if 
+	 (lambda (addr)
+	   (mu4e-message-contact-field-matches msg :from addr))
+	 mu4e-user-mail-address-list)
+	mu4e-sent-folder)       
       ;; everything else goes to /archive
       ;; important to have a catch-all at the end!
       (t  "/archive"))))
@@ -2603,6 +2634,9 @@ with @t{mu4e}. Since we are using @abbr{IMAP}, you must enable that in the
 Gmail web interface (in the settings, under the ``Forwarding and
 POP/IMAP''-tab).
 
+Gmail users may also be interested in @ref{Including related messages,
+skipping duplicates}.
+
 @subsection Setting up offlineimap
 
 First of all, we need a program to get the e-mail from Gmail to our local
@@ -2876,6 +2910,10 @@ later, it is possible to do both (note, only PGP/MIME is supported). In the
 hand side of the @t{mu4e} version. See @ref{Decryption} and @ref{Verifying
 signatures}. For encryption and signing messages, see the @ref{Writing
 messages}.
+@item @emph{Does @t{mu4e} support including all related messages in a thread,
+like Gmail does?} Yes -- see @ref{Including related messages}.
+@item @emph{There seem to be a lot of duplicate messages -- how can I get rid
+of them?} See @ref{Skipping duplicates}.
 @end enumerate
 
 @node Writing messages

@@ -129,9 +129,10 @@ am__uninstall_files_from_dir = { \
 dist_lispLISP_INSTALL = $(INSTALL_DATA)
 LISP = $(dist_lisp_LISP)
 am__ELFILES = mu4e-about.el mu4e-actions.el mu4e-compose.el \
-	mu4e-draft.el mu4e-headers.el mu4e-main.el mu4e-mark.el \
-	mu4e-message.el mu4e-meta.el mu4e-proc.el mu4e-speedbar.el \
-	mu4e-utils.el mu4e-vars.el mu4e-view.el mu4e.el org-mu4e.el
+	mu4e-draft.el mu4e-headers.el mu4e-lists.el mu4e-main.el \
+	mu4e-mark.el mu4e-message.el mu4e-meta.el mu4e-proc.el \
+	mu4e-speedbar.el mu4e-utils.el mu4e-vars.el mu4e-view.el \
+	mu4e.el org-mu4e.el
 am__ELCFILES = $(am__ELFILES:.el=.elc)
 ELCFILES = $(LISP:.el=.elc)
 elisp_comp = $(top_srcdir)/elisp-comp
@@ -325,6 +326,7 @@ dist_lisp_LISP = \
 	mu4e-compose.el		\
 	mu4e-draft.el		\
 	mu4e-headers.el		\
+	mu4e-lists.el		\
 	mu4e-main.el		\
 	mu4e-mark.el		\
 	mu4e-message.el         \

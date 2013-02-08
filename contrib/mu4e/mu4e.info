@@ -836,7 +836,8 @@ M-right      next query
 O            change sort order
 P            toggle threading
 Q            toggle full-search
-
+V            toggle skip-duplicates
+W            toggle include-related
 
 marking
 -------
@@ -1593,10 +1594,10 @@ mu4e is fully search-based: even if you 'jump to a folder', you are
 executing a query for messages that happen to have the property of
 being in a certain folder.
 
-   By default, queries return up to `mu4e-search-results-limit'
-(default: 500) results. That is usually more than enough, and makes
-things significantly faster. Sometimes, however, you may want to show
-_all_ results; you can enable this with `M-x
+   Normally, queries return up to `mu4e-headers-results-limit' (default:
+500) results. That is usually more than enough, and makes things
+significantly faster. Sometimes, however, you may want to show _all_
+results; you can enable this with `M-x
 mu4e-headers-toggle-full-search', or by customizing the variable
 `mu4e-headers-full-search'. This applies to all search commands.
 
@@ -1815,19 +1816,42 @@ clauses to the current query to match fewer messages.
 perhaps by jumping to a maildir (`M-x mu4e-headers-jump-to-maildir',
 <j>) or because you followed some bookmark (`M-x
 mu4e-headers-search-bookmark', <b>). Now, you want to narrow things
-down to only those messages that have attachments.
-
-   This is when `M-x mu4e-headers-search-narrow' (</>) comes in handy.
-It asks for an additional search pattern, which is appended to the
-current search query, in effect getting you the subset of the currently
-shown headers that also match this extra search pattern. <\> takes you
-back to the previous query, so, effectively 'widens' the search.
-Technically, narrowing the results of query x with expression y implies
-doing a search (x) AND y.
+down to only those messages that have attachments.  1 This is when `M-x
+mu4e-headers-search-narrow' (</>) comes in handy. It asks for an
+additional search pattern, which is appended to the current search
+query, in effect getting you the subset of the currently shown headers
+that also match this extra search pattern. <\> takes you back to the
+previous query, so, effectively 'widens' the search. Technically,
+narrowing the results of query x with expression y implies doing a
+search (x) AND y.
 
    Note, messages that were not in your in your original search results
-because of `mu4e-search-results-limit', may show up in the narrowed
+because of `mu4e-headers-results-limit', may show up in the narrowed
 query.
+
+7.4.3 Including related messages
+--------------------------------
+
+It can be useful to not only show the messages that directly match a
+certain query, but also include messages that are related to these
+messages. That is, messages that belong to the same discussion thread
+are included in the results, just like e.g. Gmail does it. You can
+enable this behavior by setting `mu4e-headers-include-related' to `t',
+and you can toggle between including/not-including with <W>.
+
+7.4.4 Skipping duplicates
+-------------------------
+
+Another useful features is skipping duplicate messages. When you have
+copies of messages, there's usually little value in including more than
+one in search results. A common reason for having multiple copies of
+messages in the combination of Gmail and offlineimap, since that is the
+way the labels / virtual folders in Gmail are represented. You can
+enable skipping duplicates by setting `mu4e-headers-skip-duplicates' to
+`t', and you can toggle between the skipping/not skipping with <V>.
+
+   Note, messages are considered duplicates when they have the same
+Message-Id.
 
 
 File: mu4e.info,  Node: Marking,  Next: Dynamic folders,  Prev: Searching,  Up: Top
@@ -2062,6 +2086,12 @@ folder for the particular message. An example should clarify this:
            ((string-match "football\\|soccer"
              (mu4e-message-field msg :subject))
              "/football")
+           ;; messages sent by me go to the sent folder
+           ((find-if
+     	 (lambda (addr)
+     	   (mu4e-message-contact-field-matches msg :from addr))
+     	 mu4e-user-mail-address-list)
+     	mu4e-sent-folder)
            ;; everything else goes to /archive
            ;; important to have a catch-all at the end!
            (t  "/archive"))))
@@ -2826,6 +2856,9 @@ with mu4e. Since we are using IMAP, you must enable that in the Gmail
 web interface (in the settings, under the "Forwarding and
 POP/IMAP"-tab).
 
+   Gmail users may also be interested in *note skipping duplicates:
+Including related messages.
+
 B.3.1 Setting up offlineimap
 ----------------------------
 
@@ -3102,6 +3135,12 @@ C.2 Reading messages
      the right hand side of the mu4e version. See *note Decryption::
      and *note Verifying signatures::. For encryption and signing
      messages, see the *note Writing messages::.
+
+  6. _Does mu4e support including all related messages in a thread,
+     like Gmail does?_ Yes - see *note Including related messages::.
+
+  7. _There seem to be a lot of duplicate messages - how can I get rid
+     of them?_ See *note Skipping duplicates::.
 
 
 File: mu4e.info,  Node: Writing messages,  Next: Known issues,  Prev: Reading messages,  Up: FAQ
@@ -3884,102 +3923,104 @@ Ref: HV Overview-Footnote-128762
 Ref: HV Overview-Footnote-228849
 Ref: HV Overview-Footnote-328952
 Node: Keybindings29049
-Node: Marking messages30899
-Node: Sort order and threading32102
-Ref: Sort order and threading-Footnote-133337
-Node: HV Actions33424
-Node: Split view34114
-Node: Message view35193
-Node: MSGV Overview35680
-Node: MSGV Keybindings37519
-Node: Opening and saving attachments40001
-Ref: Opening and saving attachments-Footnote-141415
-Ref: Opening and saving attachments-Footnote-241463
-Node: Viewing images inline41571
-Ref: Viewing images inline-Footnote-142410
-Node: Displaying rich-text messages42447
-Ref: Displaying rich-text messages-Footnote-143803
-Ref: Displaying rich-text messages-Footnote-243900
-Node: MSGV Crypto43942
-Ref: Decryption44834
-Ref: Verifying signatures45543
-Ref: MSGV Crypto-Footnote-146235
-Node: MSGV Actions46338
-Node: Editor view47825
-Node: EV Overview48341
-Node: Useful keybindings48725
-Node: Address autocompletion49313
-Ref: Address autocompletion-Footnote-151575
-Node: Compose hooks51618
-Node: Signing and encrypting54252
-Node: Queuing mail55062
-Node: Other settings56347
-Node: Searching56814
-Node: Queries57746
-Ref: Queries-Footnote-159673
-Node: Bookmarks59785
-Ref: Bookmarks-Footnote-162127
-Node: Maildir searches62170
-Node: Other search functionality64291
-Node: Marking66094
-Node: Selecting messages for marking66663
-Node: What to mark for67480
-Ref: What to mark for-Footnote-169029
-Ref: What to mark for-Footnote-269128
-Node: Executing the marks69312
-Node: Leaving the headers buffer69581
-Node: Built-in marking functions70010
-Node: Custom mark functions70543
-Node: Dynamic folders72834
-Node: Smart refiling73974
-Ref: Smart refiling-Footnote-176203
-Node: Other dynamic folders76248
-Node: Actions77535
-Node: Defining actions78352
-Ref: Defining actions-Footnote-179611
-Ref: Defining actions-Footnote-279783
-Node: Adding an action in the headers view79970
-Node: Adding an action in the message view80963
-Node: Adding an attachment action81859
-Node: More example actions82690
-Node: Extending mu4e83094
-Node: Extension points83502
-Node: Available functions84806
-Node: Message functions85706
-Node: Utility functions86938
-Ref: Utility functions-Footnote-188129
-Node: Interaction with other tools88233
-Node: Setting the default emacs mail program88820
-Node: Creating org-mode links89383
-Node: Rich-text messages with org-mode90332
-Ref: Rich-text messages with org-mode-Footnote-192514
-Ref: Rich-text messages with org-mode-Footnote-292573
-Node: Maintaining an address-book with org-contacts92696
-Ref: Maintaining an address-book with org-contacts-Footnote-193937
-Node: Getting new mail notifications with Sauron93998
-Ref: Getting new mail notifications with Sauron-Footnote-195747
-Node: Speedbar support95890
-Node: Citations with mu-cite96881
-Ref: Citations with mu-cite-Footnote-197632
-Node: Attaching files with dired97708
-Node: Example configurations99047
-Node: Minimal configuration99505
-Node: Longer configuration100735
-Node: Gmail configuration103603
-Node: Some other useful settings108425
-Node: FAQ109052
-Node: General109404
-Node: Reading messages112830
-Node: Writing messages114092
-Node: Known issues115786
-Node: How it works116634
-Node: High-level overview116993
-Node: mu server118487
-Node: Reading from the server119494
-Node: The message s-expression121747
-Ref: The message s-expression-Footnote-1124914
-Node: Logging and debugging125103
-Node: GNU Free Documentation License126162
+Node: Marking messages30970
+Node: Sort order and threading32173
+Ref: Sort order and threading-Footnote-133408
+Node: HV Actions33495
+Node: Split view34185
+Node: Message view35264
+Node: MSGV Overview35751
+Node: MSGV Keybindings37590
+Node: Opening and saving attachments40072
+Ref: Opening and saving attachments-Footnote-141486
+Ref: Opening and saving attachments-Footnote-241534
+Node: Viewing images inline41642
+Ref: Viewing images inline-Footnote-142481
+Node: Displaying rich-text messages42518
+Ref: Displaying rich-text messages-Footnote-143874
+Ref: Displaying rich-text messages-Footnote-243971
+Node: MSGV Crypto44013
+Ref: Decryption44905
+Ref: Verifying signatures45614
+Ref: MSGV Crypto-Footnote-146306
+Node: MSGV Actions46409
+Node: Editor view47896
+Node: EV Overview48412
+Node: Useful keybindings48796
+Node: Address autocompletion49384
+Ref: Address autocompletion-Footnote-151646
+Node: Compose hooks51689
+Node: Signing and encrypting54323
+Node: Queuing mail55133
+Node: Other settings56418
+Node: Searching56885
+Node: Queries57816
+Ref: Queries-Footnote-159743
+Node: Bookmarks59855
+Ref: Bookmarks-Footnote-162197
+Node: Maildir searches62240
+Node: Other search functionality64361
+Ref: Including related messages66231
+Ref: Skipping duplicates66690
+Node: Marking67262
+Node: Selecting messages for marking67831
+Node: What to mark for68648
+Ref: What to mark for-Footnote-170197
+Ref: What to mark for-Footnote-270296
+Node: Executing the marks70480
+Node: Leaving the headers buffer70749
+Node: Built-in marking functions71178
+Node: Custom mark functions71711
+Node: Dynamic folders74002
+Node: Smart refiling75142
+Ref: Smart refiling-Footnote-177592
+Node: Other dynamic folders77637
+Node: Actions78924
+Node: Defining actions79741
+Ref: Defining actions-Footnote-181000
+Ref: Defining actions-Footnote-281172
+Node: Adding an action in the headers view81359
+Node: Adding an action in the message view82352
+Node: Adding an attachment action83248
+Node: More example actions84079
+Node: Extending mu4e84483
+Node: Extension points84891
+Node: Available functions86195
+Node: Message functions87095
+Node: Utility functions88327
+Ref: Utility functions-Footnote-189518
+Node: Interaction with other tools89622
+Node: Setting the default emacs mail program90209
+Node: Creating org-mode links90772
+Node: Rich-text messages with org-mode91721
+Ref: Rich-text messages with org-mode-Footnote-193903
+Ref: Rich-text messages with org-mode-Footnote-293962
+Node: Maintaining an address-book with org-contacts94085
+Ref: Maintaining an address-book with org-contacts-Footnote-195326
+Node: Getting new mail notifications with Sauron95387
+Ref: Getting new mail notifications with Sauron-Footnote-197136
+Node: Speedbar support97279
+Node: Citations with mu-cite98270
+Ref: Citations with mu-cite-Footnote-199021
+Node: Attaching files with dired99097
+Node: Example configurations100436
+Node: Minimal configuration100894
+Node: Longer configuration102124
+Node: Gmail configuration104992
+Node: Some other useful settings109911
+Node: FAQ110538
+Node: General110890
+Node: Reading messages114316
+Node: Writing messages115836
+Node: Known issues117530
+Node: How it works118378
+Node: High-level overview118737
+Node: mu server120231
+Node: Reading from the server121238
+Node: The message s-expression123491
+Ref: The message s-expression-Footnote-1126658
+Node: Logging and debugging126847
+Node: GNU Free Documentation License127906
 
 End Tag Table
 

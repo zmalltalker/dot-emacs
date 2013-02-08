@@ -97,12 +97,12 @@ This is one of the symbols:
 * `trash'   move the sent message to the Trash-folder (`mu4e-trash-folder')
 * `delete'  delete the sent message.
 
-Note, when using GMail/IMAP, you should set this to either 'trash
-or 'delete, since GMail already takes care of keeping copies in the
-sent folder."
-  :type '(choice (const sent :tag "move message to mu4e-sent-folder")
-		 (const sent :tag "move message to mu4e-trash-folder")
-		 (const sent :tag "delete message"))
+Note, when using GMail/IMAP, you should set this to either
+`trash' or `delete', since GMail already takes care of keeping
+copies in the sent folder."
+  :type '(choice (const :tag "move message to mu4e-sent-folder" sent)
+		 (const :tag "move message to mu4e-trash-folder" trash)
+		 (const :tag "delete message" delete))
   :safe 'symbolp
   :group 'mu4e-compose)
 
@@ -343,6 +343,9 @@ tempfile)."
   (if (member compose-type '(new forward))
     (message-goto-to)
     (message-goto-body))
+  ;; bind to `mu4e-compose-parent-message' of compose buffer
+  (set (make-local-variable 'mu4e-compose-parent-message) original-msg)
+  (put 'mu4e-compose-parent-message 'permanent-local t)
   ;; switch on the mode
   (mu4e-compose-mode))
 
@@ -360,6 +363,14 @@ the appropriate flag at the message forwarded or replied-to."
     (when (and (buffer-file-name buf)
 	    (string= (buffer-file-name buf) path))
       (kill-buffer buf)))
+  ;; now, try to go back to some previous buffer, in the order
+  ;; view->headers->main
+  (if (buffer-live-p mu4e~view-buffer)
+    (switch-to-buffer mu4e~view-buffer)
+    (if (buffer-live-p mu4e~headers-buffer)
+      (switch-to-buffer mu4e~headers-buffer)
+      ;; if all else fails, back to the main view
+      (when (fboundp 'mu4e) (mu4e)))) 
   (mu4e-message "Message sent"))
 
 (defun mu4e~compose-set-parent-flag (path)

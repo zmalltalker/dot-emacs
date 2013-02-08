@@ -67,17 +67,21 @@ If VAL is nil, return nil."
 
 (defun mu4e~draft-references-construct (msg)
   "Construct the value of the References: header based on MSG as a
-comma-separated string. Normally, this the concatenation of the
-existing References (which may be empty) and the message-id. If the
-message-id is empty, returns the old References. If both are empty,
-return nil."
-  (let ((refs (mu4e-message-field msg :references))
-	 (old-msgid (mu4e-message-field msg :message-id)))
-    (when old-msgid
-      (setq refs (append refs (list old-msgid)))
-      (mapconcat
-	(lambda (msgid) (format "<%s>" msgid))
-	refs ","))))
+comma-separated string. Normally, this the concatenation of thedmesg
+q
+existing References + In-Reply-To (which may be empty, an note
+that :references includes the old in-reply-to as well) and the
+message-id. If the message-id is empty, returns the old
+References. If both are empty, return nil."
+  (let* ( ;; these are the ones from the message being replied to / forwarded
+	  (refs (mu4e-message-field msg :references))
+	  (msgid (mu4e-message-field msg :message-id))
+	  ;; now, append in
+	  (refs (if (and msgid (not (string= msgid "")))
+		  (append refs (list msgid)) refs))
+	  ;; no doubles
+	  (refs (delete-duplicates refs :test #'equal)))
+    (mapconcat (lambda (id) (format "<%s>" id)) refs " ")))
 
  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -259,8 +263,7 @@ You can append flags."
 	  (subject
 	    (concat mu4e~draft-reply-prefix
 	      (message-strip-subject-re (or (plist-get origmsg :subject) "")))))
-    (message "S:%s" subject)
-    (concat
+     (concat
       (mu4e~draft-header "From" (or (mu4e~draft-from-construct) ""))
       (mu4e~draft-header "Reply-To" mu4e-compose-reply-to-address)
       (mu4e~draft-header "To" (mu4e~draft-recipients-construct :to origmsg))

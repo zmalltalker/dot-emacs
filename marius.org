@@ -589,7 +589,7 @@
                             "zmalltalker@zmalltalker.com")
                            ((mu4e-message-contact-field-matches msg :to "zmalltalker@zmalltalker.com")
                             "zmalltalker@zmalltalker.com")
-                           (t "marius.mathiesen@gmail.com")))))))
+                           (t "marius@gitorious.com")))))))
 #+END_SRC
 *** Bookmarks
 

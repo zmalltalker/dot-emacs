@@ -581,6 +581,8 @@
                 (if msg
                     (setq user-mail-address
                           (cond
+                           ((mu4e-message-contact-field-matches msg :to "gitorious@google")
+                            "marius.mathiesen@gmail.com")
                            ((mu4e-message-contact-field-matches msg :to "@gitorious")
                             "marius@gitorious.com")
                            ((mu4e-message-contact-field-matches msg :to "marius@shortcut.no")

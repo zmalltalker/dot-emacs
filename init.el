@@ -57,12 +57,15 @@ code blocks which can be tangled"
  '(mu4e-mu-binary "/opt/mu/bin/mu")
  '(org-babel-load-languages (quote ((emacs-lisp . t) (ruby . t))))
  '(org-confirm-babel-evaluate nil)
+ '(safe-local-variable-values (quote ((encoding . binary))))
  '(show-paren-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "DejaVu Sans Mono" :foundry "unknown" :slant normal :weight normal :height 113 :width normal)))))
+ '(default ((t (:family "DejaVu Sans Mono" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
+ '(org-done ((t (:foreground "PaleGreen" :weight normal :strike-through t))))
+ '(org-headline-done ((((class color) (min-colors 16) (background dark)) (:foreground "LightSalmon" :strike-through t)))))
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)

@@ -855,10 +855,21 @@ e src/omg/core.clj
 
 #+END_SRC
 ** Disable n00b-modes
+   Menu-bar be gone.
 #+BEGIN_SRC emacs-lisp
 (menu-bar-mode 0)
+#+END_SRC
+
+   Toolbars be gone.
+#+BEGIN_SRC emacs-lisp
 (tool-bar-mode 0)
 #+END_SRC
+
+   Can haz column numbers?
+#+BEGIN_SRC emacs-lisp
+(column-number-mode t)
+#+END_SRC
+
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

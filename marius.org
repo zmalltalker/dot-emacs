@@ -916,6 +916,38 @@ e src/omg/core.clj
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 #+end_src
 
+    My buddy Christian just showed me how to transform this:
+
+#+BEGIN_SRC ruby
+my_method(foo,
+          bar,
+          baz,
+          gee(1,
+              00,
+              zee(1,
+                  1231)
+              ))
+#+END_SRC
+
+    into this:
+
+#+BEGIN_SRC ruby
+my_method(foo,
+  bar,
+  baz,
+  gee(1,
+    00,
+    zee(1,
+      1231)
+    ))
+#+END_SRC
+
+    - How can I achieve this awesomeness? you ask. Let me show you:
+
+#+BEGIN_SRC emacs-lisp
+(setq ruby-deep-indent-paren nil)
+#+END_SRC
+
 *** Encryption in org-mode
     Stolen from http://orgmode.org/worg/org-tutorials/encrypting-files.html
     First of all, let's require it

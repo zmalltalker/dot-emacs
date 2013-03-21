@@ -333,7 +333,7 @@
    To install a theme, use package-install.
 
 #+begin_src emacs-lisp
-(load-theme 'solarized-dark t)
+(load-theme 'wheatgrass t)
 #+end_src
 
 ** Run tests from Emacs

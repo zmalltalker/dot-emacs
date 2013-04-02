@@ -870,6 +870,31 @@ e src/omg/core.clj
 (column-number-mode t)
 #+END_SRC
 
+** Indent buffer or region
+   Indent-region is really nice, but even better is a command that
+   will indent the region (if inside a region) or the entire buffer.
+
+   Blatantly stolen from [[http://emacsredux.com/blog/2013/03/27/indent-region-or-buffer/][here]]. Binding this baby to "shift-left tab".
+
+#+BEGIN_SRC emacs-lisp
+  (defun indent-buffer ()
+    "Indent the currently visited buffer."
+    (interactive)
+    (indent-region (point-min) (point-max)))
+
+  (defun indent-region-or-buffer ()
+    "Indent a region if selected, otherwise the whole buffer."
+    (interactive)
+    (save-excursion
+      (if (region-active-p)
+          (progn
+            (indent-region (region-beginning) (region-end))
+            (message "Indented selected region."))
+        (progn
+          (indent-buffer)
+          (message "Indented buffer.")))))
+  (global-set-key (kbd "<backtab>") 'indent-region-or-buffer)
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

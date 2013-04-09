@@ -895,6 +895,66 @@ e src/omg/core.clj
           (message "Indented buffer.")))))
   (global-set-key (kbd "<backtab>") 'indent-region-or-buffer)
 #+END_SRC
+** Perspectives
+   Set up perspectives
+
+#+BEGIN_SRC emacs-lisp
+(persp-mode)
+#+END_SRC
+
+   Inspired by (=stolen from) [[http://emacsrookie.com/2011/09/25/workspaces/][this post]] I'm extending perspectives
+   with support for names and a body.
+
+#+BEGIN_SRC emacs-lisp
+(defmacro custom-persp (name &rest body)
+       `(let ((initialize (not (gethash ,name perspectives-hash)))
+              (current-perspective persp-curr))
+          (persp-switch ,name)
+          (when initialize ,@body)
+          (setq persp-last current-perspective)))
+#+END_SRC
+
+   And setting up a few perspectives of my own
+
+*** Org files
+    Switch to the =@org= perspective, open =today.org= if first time.
+    Bound to =C-c p o= (mnemonic: Perspective Org)
+
+#+BEGIN_SRC emacs-lisp
+(defun custom-persp/org ()
+  (interactive)
+  (custom-persp "@org"
+  (find-file "/home/marius/Dropbox/dotfiles/orgfiles/today.org")))
+
+(global-set-key (kbd "C-c p o") 'custom-persp/org)
+#+END_SRC
+
+*** Mail
+    Switch to mail, by default start mu4e.
+    Bound to =C-c p m= (Perspective Mail)
+
+#+BEGIN_SRC emacs-lisp
+  (defun custom-persp/mail ()
+    (interactive)
+    (custom-persp "@email")
+    (mu4e))
+
+(global-set-key (kbd "C-c p m") 'custom-persp/mail)
+#+END_SRC
+
+*** Gitorious
+    Switch to Gitorious, by default open =app/models/user.rb=.
+    Bound to =C-c p g=.
+
+#+BEGIN_SRC emacs-lisp
+  (defun custom-persp/gitorious ()
+    (interactive)
+    (custom-persp "@gitorious")
+    (find-file "/home/marius/Projects/gitorious/gitorious/app/models/user.rb"))
+
+(global-set-key (kbd "C-c p g") 'custom-persp/gitorious)
+
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

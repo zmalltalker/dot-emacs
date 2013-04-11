@@ -969,12 +969,15 @@ e src/omg/core.clj
     Bound to =C-c p g=.
 
 #+BEGIN_SRC emacs-lisp
-  (defun custom-persp/gitorious ()
-    (interactive)
-    (custom-persp "@gitorious")
-    (find-file "/home/marius/Projects/gitorious/gitorious/app/models/user.rb"))
+    (defun custom-persp/gitorious ()
+      (interactive)
+      (let ((gitorious-home "/home/marius/Projects/gitorious/gitorious/"))
+        (custom-persp "@gitorious")
+        (find-file (concat gitorious-home "app/models/user.rb"))
+        (setq tags-file-name (concat gitorious-home "TAGS"))
+        ))
 
-(global-set-key (kbd "C-c p g") 'custom-persp/gitorious)
+  (global-set-key (kbd "C-c p g") 'custom-persp/gitorious)
 
 #+END_SRC
 * My Emacs installation

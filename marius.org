@@ -49,6 +49,14 @@
   ;;             (define-key yas/keymap [tab] 'yas/next-field)))
 
 #+END_SRC
+
+** Auto-fill in org-mode
+   I always want auto-fill-mode on in my org buffers.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook
+(lambda() (auto-fill-mode)))
+#+END_SRC
 ** Ido
     Ido improves all kind of minibuffer activities:
     - find-file

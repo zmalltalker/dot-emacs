@@ -333,8 +333,22 @@
    To install a theme, use package-install.
 
 #+begin_src emacs-lisp
-(load-theme 'wheatgrass t)
+  (setq zmalltalker/default-theme 'wheatgrass)
+  (setq zmalltalker/lighter-theme 'solarized-light)
+  (defun zmalltalker/theme-lighter ()
+    (interactive)
+    (load-theme zmalltalker/lighter-theme t)
+  )
+  (defun zmalltalker/default-theme ()
+    (interactive)
+    (load-theme zmalltalker/default-theme t)
+  )
+
+  (zmalltalker/default-theme)
 #+end_src
+
+   Sometimes I need to use a lighter theme, eg. when using
+   htmlize. I'm adding a function for switching to this and back.
 
 ** Run tests from Emacs
    This is currently a wish list

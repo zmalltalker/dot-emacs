@@ -1125,3 +1125,25 @@ KUQSxb7v1Cwm+1jWP/AAua9QCTiOjA==
 #+begin_src emacs-lisp
 (require 'merge-requests)
 #+end_src
+** Beer
+   Of course I want my beer stuff in Emacs.
+*** Calculate alcolhol by volume
+    ABV = (og – fg) * 131.25
+#+BEGIN_SRC emacs-lisp
+  (defun beer/calculate-abv
+    (original-gravity finishing-gravity)
+    "Calculate alcohol by volume given OG and FG"
+    (* (- original-gravity finishing-gravity) 131.25)
+  )
+
+  (defun beer/calculate-alcohol
+    (og fg)
+    (interactive "nOriginal gravity: \nnFinishing gravity: ")
+    (message (concat "Alcohol: " (number-to-string (beer/calculate-abv og fg))
+  )))
+
+
+
+
+
+#+END_SRC

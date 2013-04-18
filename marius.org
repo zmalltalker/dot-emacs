@@ -969,12 +969,12 @@ e src/omg/core.clj
     Bound to =C-c p m= (Perspective Mail)
 
 #+BEGIN_SRC emacs-lisp
-  (defun custom-persp/mail ()
-    (interactive)
-    (custom-persp "@email")
-    (mu4e))
+    (defun custom-persp/mail ()
+      (interactive)
+      (custom-persp "@email"
+                    (mu4e)))
 
-(global-set-key (kbd "C-c p m") 'custom-persp/mail)
+  (global-set-key (kbd "C-c p m") 'custom-persp/mail)
 #+END_SRC
 
 *** Gitorious
@@ -985,14 +985,26 @@ e src/omg/core.clj
     (defun custom-persp/gitorious ()
       (interactive)
       (let ((gitorious-home "/home/marius/Projects/gitorious/gitorious/"))
-        (custom-persp "@gitorious")
+        (custom-persp "@gitorious"
         (find-file (concat gitorious-home "app/models/user.rb"))
-        (setq tags-file-name (concat gitorious-home "TAGS"))
-        ))
+        (setq tags-file-name (concat gitorious-home "TAGS")))))
 
   (global-set-key (kbd "C-c p g") 'custom-persp/gitorious)
-
 #+END_SRC
+
+*** Javascript
+    A javascript perspective, to my current javascript project. Bound
+    to =C-c p j=.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Don't open the file if it's already open
+  (defun custom-persp/javascript ()
+    (interactive)
+    (custom-persp "@javascript"
+                  (find-file "/home/marius/Projects/nordea-finans-sverige/webkalkyl/src/bind.js")))
+  (global-set-key (kbd "C-c p j") 'custom-persp/javascript)
+#+END_SRC
+
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either
@@ -1155,8 +1167,5 @@ KUQSxb7v1Cwm+1jWP/AAua9QCTiOjA==
     (message (concat "Alcohol: " (number-to-string (beer/calculate-abv og fg))
   )))
 
-
-
-
-
+(beer/calculate-alcohol 1.02 1.0)
 #+END_SRC

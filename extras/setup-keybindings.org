@@ -134,6 +134,11 @@
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-c w") 'org-store-link)
 #+end_src
+** Compile
+   Binding =compile= to =F8=
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<f8>") 'compile)
+#+END_SRC
 * Defined elsewhere
 ** Tags
    [[file:tags.org::*Key%20bindings][Key bindings for tags]]

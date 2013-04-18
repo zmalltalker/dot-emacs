@@ -137,43 +137,56 @@
    Apparently, we need to set up the project list
 
 #+begin_src emacs-lisp
-      (setq org-publish-project-alist
-            '(("blogg"
-               :base-directory "/home/marius/Projects/blog/orgfiles"
-               :publishing-directory "/home/marius/Projects/blog/output"
-               :headline-levels 3
-               :recursive t
-               :exclude "^\..$"
-               :table-of-contents nil
-               :html-preamble nil
-               :html-postamble nil
-               :body-only t
-               :section-numbers nil
-               :auto-sitemap t
-               :sitemap-filename "index.org"
-               :sitemap-sort-files anti-chronologically
-               :sitemap-sort-folders last
-               :sitemap-file-entry-format "%d: *%t*"
-               :sitemap-date-format "%B %e, %Y"
-               )
-              ("images"
-               :base-directory "~/Projects/blog/images"
-               :base-extension "jpg\\|gif\\|png"
-               :publishing-directory "/ssh:friskbris.no:/var/www/zmalltalker.com/images/"
-               :publishing-function org-publish-attachment)
-            ("bolig"
-               :base-directory "/home/marius/Dropbox/dotfiles/orgfiles/bolig/"
-               :publishing-directory "/home/marius/Dropbox/Public/Laarhalsen"
-               :headline-levels 3
-               :recursive t
-               :table-of-contents nil
-               :html-preamble nil
-               :html-postamble nil
-               :body-only t
-               :section-numbers nil
-               :auto-sitemap t
-               )
-  ))
+  (setq org-publish-project-alist
+        '(("blogg"
+           :base-directory "/home/marius/Projects/blog/orgfiles"
+           :publishing-directory "/home/marius/Projects/blog/output"
+           :headline-levels 3
+           :recursive t
+           :exclude "^\..$"
+           :table-of-contents nil
+           :html-preamble nil
+           :html-postamble nil
+           :body-only t
+           :section-numbers nil
+           :auto-sitemap t
+           :sitemap-filename "index.org"
+           :sitemap-sort-files anti-chronologically
+           :sitemap-sort-folders last
+           :sitemap-file-entry-format "%d: *%t*"
+           :sitemap-date-format "%B %e, %Y"
+           )
+          ("images"
+           :base-directory "~/Projects/blog/images"
+           :base-extension "jpg\\|gif\\|png"
+           :publishing-directory "/ssh:friskbris.no:/var/www/zmalltalker.com/images/"
+           :publishing-function org-publish-attachment)
+          ("bolig"
+           :base-directory "/home/marius/Dropbox/dotfiles/orgfiles/bolig/"
+           :publishing-directory "/home/marius/Dropbox/Public/Laarhalsen"
+           :headline-levels 3
+           :recursive t
+           :table-of-contents nil
+           :html-preamble nil
+           :html-postamble nil
+           :body-only t
+           :section-numbers nil
+           :auto-sitemap t
+           )
+          ("gitorious-book"
+           :base-directory "/home/marius/Projects/gitorious/gitorious-book/"
+           :publishing-directory "/tmp/gitorious-book"
+           :headline-levels 3
+           :recursive t
+           :table-of-contents t
+           :html-preamble nil
+           :html-postamble nil
+           :body-only nil
+           :section-numbers nil
+           :auto-sitemap t
+           )
+
+          ))
 #+end_src
 
    Let's bind =C-x p= to =org-publish-current-project=

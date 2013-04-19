@@ -1170,3 +1170,15 @@ KUQSxb7v1Cwm+1jWP/AAua9QCTiOjA==
 
 (beer/calculate-alcohol 1.02 1.0)
 #+END_SRC
+*** Conversions
+
+#+BEGIN_SRC emacs-lisp
+  (defun beer/gallon-to-litre (gallons)
+    (interactive "nHow many gallons? ")
+    (message (format "%f gallons is %.2f litres" gallons (* gallons 3.78))))
+
+  (defun beer/litre-to-gallons (litres)
+    (interactive "nHow many litres? ")
+    (message (format "%f litres is %.2f gallons" litres (/ litres 3.78))))
+
+#+END_SRC

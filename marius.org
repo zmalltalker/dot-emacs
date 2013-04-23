@@ -1005,6 +1005,31 @@ e src/omg/core.clj
   (global-set-key (kbd "C-c p j") 'custom-persp/javascript)
 #+END_SRC
 
+** Unicode-mode
+   To facilitate writing emoji/unicode, I'm adding a minor mode for
+   the most used characters.
+#+BEGIN_SRC emacs-lisp
+(defvar unicode-mode-keymap (make-keymap) "unicode-mode keymap")
+(define-key unicode-mode-keymap (kbd "h") (lambda () (interactive) (insert "♥")))  ;; heart
+(define-key unicode-mode-keymap (kbd "b") (lambda () (interactive) (insert "💣"))) ;; bomb
+(define-key unicode-mode-keymap (kbd "x") (lambda () (interactive) (insert "✂")))  ;; x for cut
+(define-key unicode-mode-keymap (kbd "s") (lambda () (interactive) (insert "☻")))  ;; smile
+(define-key unicode-mode-keymap (kbd "f") (lambda () (interactive) (insert "⚐")))  ;; flag
+(define-key unicode-mode-keymap (kbd "d") (lambda () (interactive) (insert "⚠")))  ;; danger
+(define-key unicode-mode-keymap (kbd "l") (lambda () (interactive) (insert "⚡")))  ;; lightning
+(define-key unicode-mode-keymap (kbd "*") (lambda () (interactive) (insert "★")))  ;; star
+(define-key unicode-mode-keymap (kbd "y") (lambda () (interactive) (insert "☯")))  ;; yin
+(define-key unicode-mode-keymap (kbd "p") (lambda () (interactive) (insert "☮")))  ;; peace
+(define-key unicode-mode-keymap (kbd "r") (lambda () (interactive) (insert "♻")))  ;; recycle
+(define-key unicode-mode-keymap (kbd "v") (lambda () (interactive) (insert "✔")))  ;; v for checking off
+(define-key unicode-mode-keymap (kbd "z") (lambda () (interactive) (insert "💤"))) ;; zzz
+(define-key unicode-mode-keymap (kbd "k") (lambda () (interactive) (insert "⌨")))  ;; keyboard
+(define-key unicode-mode-keymap (kbd "-") (lambda () (interactive) (insert "⛔"))) ;; - don't enter
+(define-key unicode-mode-keymap (kbd "w") (lambda () (interactive) (insert "☠")))  ;; word
+
+
+(define-minor-mode unicode-mode "Unicode art mode" :lighter " Unicode" :global t :keymap unicode-mode-keymap)
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

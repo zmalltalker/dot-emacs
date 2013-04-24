@@ -8,7 +8,7 @@
 (require 'org-install)
 (setq dotfiles-dir (file-name-directory (or (buffer-file-name) load-file-name)))
 
-
+(add-to-list 'load-path dotfiles-dir)
 (let* ((org-dir (expand-file-name
                  "lisp" (expand-file-name
                          "org-mode" (expand-file-name

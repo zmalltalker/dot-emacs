@@ -18,7 +18,6 @@
 
   This file is loaded from init.el after any .org files in extras/
   This is because we want to be able to use libraries from there from this file.
-
 ** Yasnippet
    My home boy thomanil is watching over my shoulder as I install
    Yasnippet for the umteenth time. Let's see:
@@ -1005,37 +1004,11 @@ e src/omg/core.clj
   (global-set-key (kbd "C-c p j") 'custom-persp/javascript)
 #+END_SRC
 
-** Unicode-mode
-   To facilitate writing emoji/unicode, I'm adding a minor mode for
-   the most used characters.
-#+BEGIN_SRC emacs-lisp
-  (define-minor-mode unicode-mode "Unicode art mode"
-    :lighter " Unicode"
-    :global nil
-    :keymap (let ((unicode-mode-keymap (make-sparse-keymap)))
-              (define-key unicode-mode-keymap (kbd "h") (lambda () (interactive) (insert "♥")))  ;; heart
-              (define-key unicode-mode-keymap (kbd "b") (lambda () (interactive) (insert "💣"))) ;; bomb
-              (define-key unicode-mode-keymap (kbd "x") (lambda () (interactive) (insert "✂")))  ;; x for cut
-              (define-key unicode-mode-keymap (kbd "s") (lambda () (interactive) (insert "☻")))  ;; smile
-              (define-key unicode-mode-keymap (kbd "f") (lambda () (interactive) (insert "⚐")))  ;; flag
-              (define-key unicode-mode-keymap (kbd "d") (lambda () (interactive) (insert "⚠")))  ;; danger
-              (define-key unicode-mode-keymap (kbd "l") (lambda () (interactive) (insert "⚡")))  ;; lightning
-              (define-key unicode-mode-keymap (kbd "*") (lambda () (interactive) (insert "★")))  ;; star
-              (define-key unicode-mode-keymap (kbd "y") (lambda () (interactive) (insert "☯")))  ;; yin
-              (define-key unicode-mode-keymap (kbd "p") (lambda () (interactive) (insert "☮")))  ;; peace
-              (define-key unicode-mode-keymap (kbd "r") (lambda () (interactive) (insert "♻")))  ;; recycle
-              (define-key unicode-mode-keymap (kbd "v") (lambda () (interactive) (insert "✔")))  ;; v for checking off
-              (define-key unicode-mode-keymap (kbd "z") (lambda () (interactive) (insert "💤"))) ;; zzz
-              (define-key unicode-mode-keymap (kbd "k") (lambda () (interactive) (insert "⌨")))  ;; keyboard
-              (define-key unicode-mode-keymap (kbd "-") (lambda () (interactive) (insert "⛔"))) ;; - don't enter
-              (define-key unicode-mode-keymap (kbd "w") (lambda () (interactive) (insert "☠")))  ;; word
-              unicode-mode-keymap))
-#+END_SRC
-
-   Toggle unicode-mode with F12
+** Unicode
+   Require my very own =unicode-mode=
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<f12>") 'unicode-mode)
+(require 'unicode-mode)
 #+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this

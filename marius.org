@@ -1010,6 +1010,23 @@ e src/omg/core.clj
 #+BEGIN_SRC emacs-lisp
 (require 'unicode-mode)
 #+END_SRC
+** Touch me now
+   Christian showed me a really neat trick implementing the
+   equivalent of =touch= in Emacs. Handy.
+
+   Binding this to =C-x t=.
+
+#+BEGIN_SRC emacs-lisp
+  (defun zmalltalker/touch ()
+    "touch(1) in Emacs"
+    (interactive)
+    (save-excursion
+      (insert " ")
+      (backward-delete-char 1)
+      (save-buffer)))
+  (global-set-key (kbd "C-x t") 'zmalltalker/touch)
+
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

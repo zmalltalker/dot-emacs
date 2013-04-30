@@ -1027,6 +1027,35 @@ e src/omg/core.clj
   (global-set-key (kbd "C-x t") 'zmalltalker/touch)
 
 #+END_SRC
+** Editing awesomeness
+   =C-return= opens a new line below point.
+   =S-S-return= opens a new line above point.
+   =M-return= opens a new line with cursor at point on a new line
+
+#+BEGIN_SRC emacs-lisp
+  (defun open-line-below ()
+    (interactive)
+    (end-of-line)
+    (newline)
+    (indent-for-tab-command))
+
+  (defun open-line-above ()
+    (interactive)
+    (beginning-of-line)
+    (newline)
+    (forward-line -1)
+    (indent-for-tab-command))
+
+  (defun new-line-in-between ()
+    (interactive)
+    (newline)
+    (indent-for-tab-command))
+
+  (global-set-key (kbd "<C-return>") 'open-line-below)
+  (global-set-key (kbd "<C-S-return>") 'open-line-above)
+  (global-set-key (kbd "<M-return>") 'new-line-in-between)
+#+END_SRC
+
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

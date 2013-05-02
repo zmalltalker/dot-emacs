@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: (demo) boilerplate recruiter response
+# key: jobok
+# --
+Hi ${1:AGENT_NAME},
+
+Thank you very much for providing me this great opportunity.
+
+Unfortunately I'm occupied now and will not consider new job for the time being.
+
+Currently I'm working for ${2:COMPANY_NAME} as a contract developer. However, the
+contract will be over ${3:END_OF_CONTRACT} and I will be available then.
+
+So keep int touch.
+
+Attached is my latest CV.
+$0
+
+<#part type="application/msword" filename="~/org/cv/resume.doc" disposition=attachment description=resume>
+<#/part>

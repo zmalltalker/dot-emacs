@@ -1,6 +1,0 @@
-#name : def ... ... end
-#group : collections
-# --
-def ${method_name}
-  $0
-end

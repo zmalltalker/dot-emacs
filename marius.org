@@ -18,37 +18,46 @@
 
   This file is loaded from init.el after any .org files in extras/
   This is because we want to be able to use libraries from there from this file.
+** Packages
+
+   Emacs 24 ships with a package system, which is great.
+   Let's enable it:
+
+#+begin_src emacs-lisp
+(package-initialize)
+#+end_src
+
+   and add some more repositories:
+
+#+begin_src emacs-lisp
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+#+end_src
+
 ** Yasnippet
-   My home boy thomanil is watching over my shoulder as I install
-   Yasnippet for the umteenth time. Let's see:
+   I keep revisiting this one. [[http://blog.binchen.org/?p%3D553][Bin Chen]] suggests binding completion
+   to a different key combo than =TAB=, which may make sense. Oh, and
+   he uses it for email, which is pretty awesome.
+
+   Giving it another shot, this time binding it to =C-c k=
 #+BEGIN_SRC emacs-lisp
-  ;; (add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.8.0")
-  ;; (require 'yasnippet)
-  ;; (yas/global-mode t)
-  ;; (yas/load-directory "~/.emacs.d/snippets")
-  ;; (setq yas/global-mode t)
+;;  (add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.8.0")
+  (require 'yasnippet)
+  (yas/global-mode t)
+  (setq my-snippets (expand-file-name "~/.emacs.d/snippets"))
+  (add-to-list 'yas-snippet-dirs my-snippets)
 #+END_SRC
 
-   I'm not sure I'll keep this, but let's keep the man happy.
+   Now to stop yasnippets from occupying =TAB= (God, that's annoying)
+   and rebind to =C-c y e= (mnemonic Yas Expand).
 
 #+BEGIN_SRC emacs-lisp
-  ;; (add-hook 'org-mode-hook
-  ;;           (lambda ()
-  ;;             (org-set-local 'yas/trigger-key [tab])
-  ;;             (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
-
-  ;; (defun yas/org-very-safe-expand ()
-  ;;   (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
-
-  ;; (add-hook 'org-mode-hook
-  ;;           (lambda ()
-  ;;             (make-variable-buffer-local 'yas/trigger-key)
-  ;;             (setq yas/trigger-key [tab])
-  ;;             (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
-  ;;             (define-key yas/keymap [tab] 'yas/next-field)))
-
+(global-set-key (kbd "C-c y e") 'yas-expand)
+(global-set-key (kbd "C-c y i") 'yas-insert-snippet)
+(define-key yas-minor-mode-map [(tab)] nil)
 #+END_SRC
 
+   
 ** Auto-fill in org-mode
    I always want auto-fill-mode on in my org buffers.
 
@@ -253,22 +262,6 @@
 )
 
 #+END_SRC
-** Packages
-
-   Emacs 24 ships with a package system, which is great.
-   Let's enable it:
-
-#+begin_src emacs-lisp
-(package-initialize)
-#+end_src
-
-   and add some more repositories:
-
-#+begin_src emacs-lisp
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-#+end_src
-
 ** Magnar's awesome Magit setup
    Magit. I was skeptical at first, but then I just ... yum.
    Let's load it

@@ -1,6 +1,0 @@
-#name : p.class
-#group : tagz
-# --
-<p class="$1">
-  $2
-</p>

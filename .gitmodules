@@ -13,3 +13,6 @@
 [submodule "contrib/multiple-cursors"]
 	path = contrib/multiple-cursors
 	url = https://github.com/magnars/multiple-cursors.el.git
+[submodule "contrib/restclient"]
+	path = contrib/restclient
+	url = https://github.com/pashky/restclient.el.git

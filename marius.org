@@ -57,7 +57,7 @@
 (define-key yas-minor-mode-map [(tab)] nil)
 #+END_SRC
 
-   
+
 ** Auto-fill in org-mode
    I always want auto-fill-mode on in my org buffers.
 
@@ -1049,6 +1049,22 @@ e src/omg/core.clj
   (global-set-key (kbd "<M-return>") 'new-line-in-between)
 #+END_SRC
 
+** Restclient.el
+   [[https://github.com/pashky/restclient.el][Yummy!]] Restclient is a major mode for interacting with REST
+   interfaces. Enter something like:
+
+#+BEGIN_EXAMPLE
+GET https://gitorious.org/gitorious/mainline.xml
+#+END_EXAMPLE
+
+   then hit =C-c C-c= and view the (pretty-printed) results in
+   a separate buffer. =C-c C-r= does the same without
+   pretty-printing.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path (concat dotfiles-dir "/contrib/restclient"))
+(require 'restclient)
+#+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this
   version doesn't work 100% with all of the orgmode features, either

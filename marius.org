@@ -992,24 +992,36 @@ e src/omg/core.clj
     a [[https://github.com/guard/guard][Guard]] subshell.
 
 #+BEGIN_SRC emacs-lisp
-    ;; Don't open the file if it's already open
-    (defun guard-start ()
-      "Run guard in Emacs"
-      (interactive)
-      (async-shell-command "bundle exec guard" "*Guard*"))
+  ;; Don't open the file if it's already open
+  (defun guard-start ()
+    "Run guard in Emacs"
+    (interactive)
+    (async-shell-command "bundle exec guard" "*Guard*"))
 
-    (defun custom-persp/javascript ()
-      (interactive)
-      (custom-persp "@javascript"
+  (defun custom-persp/javascript ()
+    (interactive)
+    (custom-persp "@javascript"
+                  (let ((current-js-project "/home/marius/Projects/nordea-finans-sverige/webkalkyl"))
                     (setenv "JSTESTDRIVER_HOME" "/opt/lib")
-                    (find-file "/home/marius/Projects/nordea-finans-sverige/webkalkyl/src/bind.js")
-                    (cd "/home/marius/Projects/nordea-finans-sverige/webkalkyl")
+                    (find-file (concat current-js-project "/src/bind.js"))
+                    (cd current-js-project)
                     (guard-start)
-                    ))
-    (global-set-key (kbd "C-c p j") 'custom-persp/javascript)
-
+                    )))
+  (global-set-key (kbd "C-c p j") 'custom-persp/javascript)
 #+END_SRC
+*** Lisp
+    All this scratching my private parts calls for a procrastination
+    perspective. =C-c p l= to the resque.
 
+#+BEGIN_SRC emacs-lisp
+  (defun custom-persp/procrastination ()
+    "Speak with a lisp"
+    (interactive)
+    (custom-persp "@lisp"
+                  (find-file (concat dotfiles-dir "/marius.org"))))
+
+  (global-set-key (kbd "C-c p l") 'custom-persp/procrastination)
+#+END_SRC
 ** Unicode
    Require my very own =unicode-mode=
 

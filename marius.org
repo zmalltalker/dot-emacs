@@ -392,28 +392,20 @@
 (add-to-list 'load-path (concat dotfiles-dir "/contrib"))
 (require 'ascii-art-to-unicode)
 #+END_SRC
-** More org exporters (Org > 7.9)
-   Org's =contrib/lisp= contains a lot of new exporters.
-#+BEGIN_SRC emacs-lisp
-(require 'org-export)
-#+END_SRC
+** TODO More org exporters (Org > 7.9)
+   This is WIP, as org 8.0 changes exports stuff [[http://orgmode.org/worg/org-8.0.html][a lot]]
 
    Markdown is an inferior format, and can be generated.
 #+BEGIN_SRC emacs-lisp
-(require 'org-md)
+(require 'ox-md)
 #+END_SRC
 
-   Generating man pages? Great idea.
-
+   Halleluja, I can make man pages!
 #+BEGIN_SRC emacs-lisp
-(require 'org-e-man)
+(require 'ox-man)
 #+END_SRC
 
-   Oh yeah, and ascii
 
-#+BEGIN_SRC emacs-lisp
-(require 'org-e-ascii)
-#+END_SRC
 ** Speed commands in org
    With speed commands enabled, I can enter single-letter commands
    when the cursor is at the very beginning of a headline. =?=

@@ -339,6 +339,14 @@
 #+END_SRC
 ** Theme
    Emacs 24 has built-in theming support.
+*** Custom themes
+    Dropping any themes I want to try out into =~/.emacs.d/themes=
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+#+END_SRC
+
+*** Current theme
 
    I'm using the solarized-dark theme right now. It's really easy on
    my eyes and pretty as well. This theme is installed using Emacs'
@@ -1089,6 +1097,12 @@ GET https://gitorious.org/gitorious/mainline.xml
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'load-path (concat dotfiles-dir "/contrib/restclient"))
 (require 'restclient)
+#+END_SRC
+** Yes or no?
+   Also known as y or n. I prefer the latter
+
+#+BEGIN_SRC emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this

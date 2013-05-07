@@ -218,7 +218,8 @@ The server output is as follows:
 	      (plist-get sexp :props)))
 
 	  ;; received a contacts message
-	  ((plist-get sexp :contacts)
+	  ;; note: we use 'member', to match (:contacts nil)
+	  ((plist-member sexp :contacts)
 	    (funcall mu4e-contacts-func
 	      (plist-get sexp :contacts)))
 
@@ -256,7 +257,7 @@ The server output is as follows:
 	    (funcall mu4e-error-func
 	      (plist-get sexp :error)
 	      (plist-get sexp :message)))
-
+	  
 	  (t (mu4e-message "Unexpected data from server [%S]" sexp)))
 
 	(setq sexp (mu4e~proc-eat-sexp-from-buf))))))
@@ -336,19 +337,18 @@ result found, a function is called, depending on the kind of
 result. The variables `mu4e-error-func' contain the function that
 will be called for, resp., a message (header row) or an error."
   (mu4e~proc-send-command
-    (format 
-      (concat
-	"find query:\"%s\" threads:%s sortfield:%s reverse:%s maxnum:%d "
-	"skip-dups:%s include-related:%s")
-      (mu4e~proc-escape-query query)
-      (if threads "true" "false")
-      ;; sortfield is e.g. ':subject'; this removes the ':'
-      (if (null sortfield) "nil" (substring (symbol-name sortfield) 1))
-      ;; TODO: use ascending/descending in backend too (it's clearer than 'reverse'
-      (if (eq sortdir 'descending) "true" "false")
-      (if maxnum maxnum -1)
-      (if skip-dups "true" "false")
-      (if include-related "true" "false"))))
+    (concat
+      "find query:\"%s\" threads:%s sortfield:%s reverse:%s maxnum:%d "
+      "skip-dups:%s include-related:%s")
+    (mu4e~proc-escape-query query)
+    (if threads "true" "false")
+    ;; sortfield is e.g. ':subject'; this removes the ':'
+    (if (null sortfield) "nil" (substring (symbol-name sortfield) 1))
+    ;; TODO: use ascending/descending in backend too (it's clearer than 'reverse'
+    (if (eq sortdir 'descending) "true" "false")
+    (if maxnum maxnum -1)
+    (if skip-dups "true" "false")
+    (if include-related "true" "false")))
 
 (defun mu4e~proc-move (docid-or-msgid &optional maildir flags)
   "Move message identified by DOCID-OR-MSGID.
@@ -463,7 +463,7 @@ mean:
 		  docid partidx what
 		  (if param (format " param:\"%s\"" param) "")))
 	      (otherwise (mu4e-error "Unsupported action %S" action))))))
-    (mu4e~proc-send-command cmd)))
+    (mu4e~proc-send-command "%s" cmd)))
 
 
 (defun mu4e~proc-ping ()

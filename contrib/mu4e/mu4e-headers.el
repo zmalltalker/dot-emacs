@@ -127,6 +127,25 @@ sent messages into message threads."
   :type 'boolean
   :group 'mu4e-headers)
 
+(defcustom mu4e-headers-visible-flags
+  '(draft flagged new passed replied seen trashed attach encrypted signed unread)
+  "An ordered list of flags to show in the headers buffer. Each
+element is a symbol in the list (DRAFT FLAGGED NEW PASSED
+REPLIED SEEN TRASHED ATTACH ENCRYPTED SIGNED UNREAD)."
+  :type '(set
+          (const :tag "Draft" draft)
+          (const :tag "Flagged" flagged)
+          (const :tag "New" new)
+          (const :tag "Passed" passed)
+          (const :tag "Replied" replied)
+          (const :tag "Seen" seen)
+          (const :tag "Trashed" trashed)
+          (const :tag "Attach" attach)
+          (const :tag "Encrypted" encrypted)
+          (const :tag "Signed" signed)
+          (const :tag "Unread" unread))
+  :group 'mu4e-headers)
+
 ;; marks for headers of the form; each is a cons-cell (basic . fancy)
 ;; each of which is basic ascii char and something fancy, respectively
 (defvar mu4e-headers-draft-mark     (purecopy '("D" . "⚒")) "Draft.")
@@ -322,25 +341,26 @@ Note that `mu4e-flags-to-string' is for internal use only; this
 function is for display. (This difference is significant, since
 internally, the Maildir spec determines what the flags look like,
 while our display may be different)."
-  (let ((str)
-	 (get-prefix
-	   (lambda (cell) (if mu4e-use-fancy-chars (cdr cell) (car cell)))))
-    (dolist (flag flags)
-      (setq str
-	(concat str
-	  (case flag
-	    ('draft     (funcall get-prefix mu4e-headers-draft-mark))
-	    ('flagged   (funcall get-prefix mu4e-headers-flagged-mark))
-	    ('new       (funcall get-prefix mu4e-headers-new-mark))
-	    ('passed    (funcall get-prefix mu4e-headers-passed-mark))
-	    ('replied   (funcall get-prefix mu4e-headers-replied-mark))
-	    ('seen      (funcall get-prefix mu4e-headers-seen-mark))
-	    ('trashed   (funcall get-prefix mu4e-headers-trashed-mark))
-	    ('attach    (funcall get-prefix mu4e-headers-attach-mark))
-	    ('encrypted (funcall get-prefix mu4e-headers-encrypted-mark))
-	    ('signed    (funcall get-prefix mu4e-headers-signed-mark))
-	    ('unread    (funcall get-prefix mu4e-headers-unread-mark))))))
-	   str))
+  (let ((str "")
+        (get-prefix
+         (lambda (cell) (if mu4e-use-fancy-chars (cdr cell) (car cell)))))
+    (dolist (flag mu4e-headers-visible-flags)
+      (when (member flag flags)
+        (setq str
+          (concat str
+            (case flag
+              ('draft     (funcall get-prefix mu4e-headers-draft-mark))
+              ('flagged   (funcall get-prefix mu4e-headers-flagged-mark))
+              ('new       (funcall get-prefix mu4e-headers-new-mark))
+              ('passed    (funcall get-prefix mu4e-headers-passed-mark))
+              ('replied   (funcall get-prefix mu4e-headers-replied-mark))
+              ('seen      (funcall get-prefix mu4e-headers-seen-mark))
+              ('trashed   (funcall get-prefix mu4e-headers-trashed-mark))
+              ('attach    (funcall get-prefix mu4e-headers-attach-mark))
+              ('encrypted (funcall get-prefix mu4e-headers-encrypted-mark))
+              ('signed    (funcall get-prefix mu4e-headers-signed-mark))
+              ('unread    (funcall get-prefix mu4e-headers-unread-mark)))))))
+    str))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -419,13 +439,17 @@ if provided, or at the end of the buffer otherwise."
 		  (truncate-string-to-width str width 0 ?\s t)) " ")))))
       ;; now, propertize it.
       (setq line (propertize line 'face
-		   (case (car-safe (mu4e-message-field msg :flags))
-		     ('draft           'mu4e-draft-face)
-		     ('trash           'mu4e-trashed-face)
-		     ((unread new)     'mu4e-unread-face)
-		     ('flagged         'mu4e-flagged-face)
-		     ((replied passed) 'mu4e-replied-face)
-		     (t                'mu4e-header-face))))
+		   (let ((flags (mu4e-message-field msg :flags)))
+		     (cond
+		       ((memq 'trashed flags) 'mu4e-trashed-face)
+		       ((memq 'draft flags)   'mu4e-draft-face)
+		       ((or
+			  (memq 'unread flags)
+			  (memq 'new flags))  'mu4e-unread-face)
+		       ((memq 'flagged flags) 'mu4e-flagged-face)
+		       ((memq 'replied flags) 'mu4e-replied-face)
+		       ((memq 'passed flags)  'mu4e-forwarded-face)
+		       (t                     'mu4e-header-face)))))
       ;; now, append the header line
       (mu4e~headers-add-header line docid point msg)))
 
@@ -481,7 +505,9 @@ after the end of the search results."
   (setq mu4e-headers-mode-map
     (let ((map (make-sparse-keymap)))
 
-      (define-key map  (kbd "C-S-u") 'mu4e-update-mail-and-index)
+      (define-key map  (kbd "C-S-u")   'mu4e-update-mail-and-index)
+      ;; for terminal users
+      (define-key map  (kbd "C-c C-u") 'mu4e-update-mail-and-index)
 
       (define-key map "s" 'mu4e-headers-search)
       (define-key map "S" 'mu4e-headers-search-edit)
@@ -558,7 +584,7 @@ after the end of the search results."
       (define-key map "x" 'mu4e-mark-execute-all)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-      (define-key map "A" 'mu4e-headers-action)
+      (define-key map "a" 'mu4e-headers-action)
 
       ;; message composition
       (define-key map "R" 'mu4e-compose-reply)
@@ -586,21 +612,21 @@ after the end of the search results."
 	(define-key menumap [execute-marks]  '("Execute marks"
 						. mu4e-mark-execute-all))
 	(define-key menumap [unmark-all]  '("Unmark all" . mu4e-mark-unmark-all))
-	(define-key menumap [unmark]      '("Unmark" . mu4e~headers-mark-unmark))
+	(define-key menumap [unmark]      '("Unmark" . mu4e-headers-mark-for-unmark))
 
 	(define-key menumap [mark-pattern]  '("Mark pattern" .
 					       mu4e-headers-mark-pattern))
 	(define-key menumap [mark-as-read]  '("Mark as read" .
-					       mu4e~headers-mark-read))
+					       mu4e-headers-mark-for-read))
 	(define-key menumap [mark-as-unread]
-	  '("Mark as unread" .  mu4e~headers-mark-unread))
+	  '("Mark as unread" .  mu4e-headers-mark-for-unread))
 
 	(define-key menumap [mark-delete]
-	  '("Mark for deletion" . mu4e~headers-mark-delete))
+	  '("Mark for deletion" . mu4e-headers-mark-for-delete))
 	(define-key menumap [mark-trash]
-	  '("Mark for trash" .  mu4e~headers-mark-trash))
+	  '("Mark for trash" .  mu4e-headers-mark-for-trash))
 	(define-key menumap [mark-move]
-	  '("Mark for move" . mu4e~headers-mark-move))
+	  '("Mark for move" . mu4e-headers-mark-for-move))
 	(define-key menumap [sepa1] '("--"))
 
 	(define-key menumap [compose-new]  '("Compose new" . mu4e-compose-new))
@@ -902,8 +928,8 @@ of `mu4e-split-view', and return a window for the message view."
 
 (defun mu4e-headers-for-each (func)
   "Call FUNC for each header, moving point to the header.
-FUNC takes one argument, the msg s-expression for the
-corresponding header."
+FUNC takes one argument, the msg s-expression for the corresponding
+header."
   (save-excursion
     (goto-char (point-min))
     (while (search-forward mu4e~headers-docid-pre nil t)
@@ -978,9 +1004,8 @@ matching messages with that mark."
 
 
 (defun mu4e-headers-mark-thread (&optional subthread)
-  "Mark the thread at point.
-If SUBTHREAD is non-nil, marking is limited to the message at
-point and its descendants."
+  "Mark the thread at point. If SUBTHREAD is non-nil, marking is
+limited to the message at point and its descendants."
   ;; the tread id is shared by all messages in a thread
   (interactive "P")
   (let* ((msg (mu4e-message-at-point))
@@ -1207,7 +1232,6 @@ _not_ refresh the last search with the new setting for threading."
   (mu4e~headers-toggle "Skip-duplicates"
   'mu4e-headers-skip-duplicates dont-refresh))
 
-
 (defvar mu4e~headers-loading-buf nil
   "A buffer for loading a message view.")
 
@@ -1336,7 +1360,7 @@ maildir)."
     (mu4e-mark-handle-when-leaving)
     (mu4e-headers-search (concat "\"maildir:" maildir "\""))))
 
-(defun mu4e-headers-split-view-grow (n)
+(defun mu4e-headers-split-view-grow (&optional n)
   "In split-view, grow the headers window.
 In horizontal split-view, increase the number of lines shown by N.
 In vertical split-view, increase the number of columns shown by N.
@@ -1356,14 +1380,14 @@ do nothing."
 	   (window-resize hwin n t)
 	   (incf mu4e-headers-visible-columns n)))))))
 
-(defun mu4e-headers-split-view-shrink (n)
+(defun mu4e-headers-split-view-shrink (&optional n)
   "In split-view, shrink the headers window.
 In horizontal split-view, decrease the number of lines shown by N.
 In vertical split-view, decrease the number of columns shown by N.
-If N is negative grow the headers window.
-When not in split-view do nothing."
+If N is negative grow the headers window.  When not in split-view
+do nothing."
   (interactive "P")
-  (mu4e-headers-split-view-grow (- n)))
+  (mu4e-headers-split-view-grow (- (or n 1))))
 
 (defun mu4e-headers-action ()
   "Ask user what to do with message-at-point, then do it.

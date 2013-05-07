@@ -12,3 +12,4 @@ auto-save-list/*
 session.*
 url
 *elc
+contrib/multiple-cursors/*.elc

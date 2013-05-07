@@ -354,7 +354,7 @@
    To install a theme, use package-install.
 
 #+begin_src emacs-lisp
-  (setq zmalltalker/default-theme 'wheatgrass)
+  (setq zmalltalker/default-theme 'zenburn)
   (setq zmalltalker/lighter-theme 'solarized-light)
   (defun zmalltalker/theme-lighter ()
     (interactive)

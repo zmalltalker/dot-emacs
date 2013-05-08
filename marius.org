@@ -14,6 +14,7 @@
 #+LINK_HOME:
 #+XSLT:
 
+
 * Dot emacs, literate style
 
   This file is loaded from init.el after any .org files in extras/
@@ -396,15 +397,16 @@
    This is WIP, as org 8.0 changes exports stuff [[http://orgmode.org/worg/org-8.0.html][a lot]]
 
    Markdown is an inferior format, and can be generated.
-#+BEGIN_SRC emacs-lisp
-(require 'ox-md)
-#+END_SRC
-
    Halleluja, I can make man pages!
 #+BEGIN_SRC emacs-lisp
-(require 'ox-man)
+(setq org-export-backends '(ascii html icalendar latex man deck groff rss texinfo))
 #+END_SRC
+** Use bullets for headings in org
 
+#+BEGIN_SRC emacs-lisp
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+END_SRC
 
 ** Speed commands in org
    With speed commands enabled, I can enter single-letter commands

@@ -142,6 +142,20 @@
 (unless (server-running-p) (server-start))
 #+end_src
 
+** Zen coding
+   Absolutely amazing. By entering CSS selectors like
+   =html>head+body>div.content>ul#navigation>li.item*4= and caling
+   =zencoding-expand-line= you end up with:
+   - an interactive preview of the markup that would be rendered
+   - Pressing =RET= will insert it into the buffer.
+
+   I made a short [[http://ascii.io/a/3330][asciicast]] about it. Let's activate it automatically
+   for any SGML modes
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'sgml-mode-hook 'zencoding-mode)
+#+END_SRC
+
 ** Blogging from org
    Apparently, we need to set up the project list
 

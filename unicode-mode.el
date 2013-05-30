@@ -53,6 +53,18 @@
 	    (define-key unicode-mode-keymap (kbd "2") (lambda () (interactive) (insert "┘")))  ;; second corner, CSS style
 	    (define-key unicode-mode-keymap (kbd "3") (lambda () (interactive) (insert "└")))  ;; third corner, CSS style
 	    (define-key unicode-mode-keymap (kbd "4") (lambda () (interactive) (insert "┌")))  ;; fourth corner, CSS style
+	    (define-key unicode-mode-keymap (kbd "@01") (lambda () (interactive) (insert "🕐")))  ;; One o'clock
+	    (define-key unicode-mode-keymap (kbd "@02") (lambda () (interactive) (insert "🕑")))  ;; One o'clock
+	    (define-key unicode-mode-keymap (kbd "@03") (lambda () (interactive) (insert "🕒")))  ;; One o'clock
+	    (define-key unicode-mode-keymap (kbd "@04") (lambda () (interactive) (insert "🕓")))  ;; One o'clock
+	    (define-key unicode-mode-keymap (kbd "@05") (lambda () (interactive) (insert "🕔")))  ;; One o'clock
+	    (define-key unicode-mode-keymap (kbd "@06") (lambda () (interactive) (insert "🕕")))  ;; One o'clock
+	    (define-key unicode-mode-keymap (kbd "@07") (lambda () (interactive) (insert "🕖")))  ;; One o'clock
+	    (define-key unicode-mode-keymap (kbd "@08") (lambda () (interactive) (insert "🕗")))  ;; One o'clock
+	    (define-key unicode-mode-keymap (kbd "@09") (lambda () (interactive) (insert "🕘")))  ;; One o'clock
+	    (define-key unicode-mode-keymap (kbd "@10") (lambda () (interactive) (insert "🕙")))  ;; One o'clock
+	    (define-key unicode-mode-keymap (kbd "@11") (lambda () (interactive) (insert "🕚")))  ;; One o'clock
+	    (define-key unicode-mode-keymap (kbd "@12") (lambda () (interactive) (insert "🕛")))  ;; One o'clock
 	    (define-key unicode-mode-keymap (kbd "?") 'unicode-mode-insert-help)
 	    unicode-mode-keymap))
 

@@ -1021,7 +1021,7 @@ e src/omg/core.clj
                     (setenv "JSTESTDRIVER_HOME" "/opt/lib")
                     (find-file (concat current-js-project "/src/bind.js"))
                     (cd current-js-project)
-                    (guard-start)
+;;                    (guard-start)
                     )))
   (global-set-key (kbd "C-c p j") 'custom-persp/javascript)
 #+END_SRC
@@ -1153,10 +1153,11 @@ GET https://gitorious.org/gitorious/mainline.xml
    - Bind C-x / to comment-or-uncomment-region
 
 #+begin_src emacs-lisp
-(add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Guardfile$" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Guardfile$" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
 #+end_src
 
     My buddy Christian just showed me how to transform this:

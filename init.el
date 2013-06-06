@@ -58,7 +58,7 @@ code blocks which can be tangled"
  '(mu4e-mu-binary "/opt/mu/bin/mu")
  '(org-babel-load-languages (quote ((emacs-lisp . t) (ruby . t))))
  '(org-confirm-babel-evaluate nil)
- '(safe-local-variable-values (quote ((encoding . binary))))
+ '(safe-local-variable-values (quote ((encoding . utf-8) (encoding . binary))))
  '(show-paren-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

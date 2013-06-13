@@ -154,6 +154,7 @@
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'sgml-mode-hook 'zencoding-mode)
+(add-hook 'web-mode-hook 'zencoding-mode)
 #+END_SRC
 
 ** Blogging from org
@@ -1190,6 +1191,16 @@ my_method(foo,
 
 #+BEGIN_SRC emacs-lisp
 (setq ruby-deep-indent-paren nil)
+#+END_SRC
+*** Web-mode
+    Countless times, I've been bitten my hacks like MMM (Multiple
+    Major Modes). But from what I hear, =web-mode= actually
+    works. Let's give it a shot
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.erb$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
+
 #+END_SRC
 
 *** Encryption in org-mode

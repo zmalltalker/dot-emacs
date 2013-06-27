@@ -165,6 +165,7 @@
         '(("blogg"
            :base-directory "/home/marius/Projects/blog/orgfiles"
            :publishing-directory "/home/marius/Projects/blog/output"
+           :publishing-function org-html-publish-to-html
            :headline-levels 3
            :recursive t
            :exclude "^\..$"
@@ -209,8 +210,8 @@
            :section-numbers nil
            :auto-sitemap t
            )
-
           ))
+
 #+end_src
 
    Let's bind =C-x p= to =org-publish-current-project=
@@ -1219,20 +1220,30 @@ my_method(foo,
     To encrypt an entry, simply use =org-encrypt-entry=, like has been
     done in the next paragraph.
 **** This is invisible
------BEGIN PGP MESSAGE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+****
+     You can't touch this.
 
-hQEMA9BzRTS1G1TnAQf+PJ4Fg+vKtl+GvIwPToLvvWaioLgRnQWy8nW19dhb5KMm
-XglCL558cM9jZrYpTPgQpCMlQ1D7h1rPl3WxQh9gcYHcMrCgsHmhHss2sN0eYxrE
-TuSRJVCqtCfmkAptHjF5YoGEw7rd90AgChLBGnR7BgM0AFAXWqelmZkoo44tFqvZ
-JrppMTMPOd9l625CT7Az6ppYhEBosR1pBMx1/AFZ+KL2kPLf0LZ69aHGpvojQTRq
-L9dR9u72vjyVc7UNYthhKOL1ISTPuI9L8Zu8vcOJ8O3VQ01Lg2kTsT4BLjjjc0N4
-CE9hlwcTrz8z+yMdiVlc74hLZmu9ND0jDh1CtABQ6dJVAfURUptO6r2/P1ubuG1I
-HCrVdQr2EMMK9ZOMdmZC4w6M/yh6Z6Svxo1NOsy8QzOj/dZzM7ytmikpDduv5xGn
-KUQSxb7v1Cwm+1jWP/AAua9QCTiOjA==
-=1cu5
------END PGP MESSAGE-----
+*** Chruby
+    Swith my Rubies in Emacs with chruby.el.
+#+BEGIN_SRC emacs-lisp
+(require 'chruby)
+(chruby "1.9.3")
+#+END_SRC
 
+*** XMPfilter
+    Now that I have a working Ruby inside Emacs (through =chruby-el=)
+    I can finally use xmpfilter.
+
+    Use a hashrocket comment and hit =C-c C-c= to evaluate:
+
+#+BEGIN_SRC ruby
+  foo = {name: "John"}
+  foo # => {:name=>"John"}
+#+END_SRC
++BEGIN_SRC emacs-lisp
+(require 'rcodetools)
+(define-key ruby-mode-map (kbd "C-c C-c") 'xmp)
+#+END_SRC
 ** Other (contributed) libraries
 *** Expand region
     Lets you do wonderful things with regions.

@@ -1230,6 +1230,25 @@ my_method(foo,
 (chruby "1.9.3")
 #+END_SRC
 
+*** Smart-parens
+    Take care of those parens etc with style. When entering anything
+    that acts like a paren, add a closing one. Manually typing a
+    closing paren skips that character:
+
+#+BEGIN_EXAMPLE
+(|)
+(foo)|
+#+END_EXAMPLE
+
+    And it handles quoted pairs as well, deleting the matching ones:
+
+#+BEGIN_EXAMPLE
+  "\"({foo})\""
+#+END_EXAMPLE
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'ruby-mode-hook 'smartparens-mode)
+#+END_SRC
 *** XMPfilter
     Now that I have a working Ruby inside Emacs (through =chruby-el=)
     I can finally use xmpfilter.

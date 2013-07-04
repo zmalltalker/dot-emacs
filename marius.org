@@ -18,7 +18,15 @@
 * Dot emacs, literate style
 
   This file is loaded from init.el after any .org files in extras/
-  This is because we want to be able to use libraries from there from this file.
+  This is because we want to be able to use libraries from there from
+  this file.
+
+** The basics
+
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-screen t)
+#+END_SRC
+
 ** Packages
 
    Emacs 24 ships with a package system, which is great.
@@ -997,7 +1005,8 @@ e src/omg/core.clj
       (let ((gitorious-home "/home/marius/Projects/gitorious/gitorious/"))
         (custom-persp "@gitorious"
         (find-file (concat gitorious-home "app/models/user.rb"))
-        (setq tags-file-name (concat gitorious-home "TAGS")))))
+        (setq tags-file-name (concat gitorious-home "TAGS"))
+)))
 
   (global-set-key (kbd "C-c p g") 'custom-persp/gitorious)
 #+END_SRC

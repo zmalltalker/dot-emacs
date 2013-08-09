@@ -1000,17 +1000,36 @@ e src/omg/core.clj
     Bound to =C-c p g=.
 
 #+BEGIN_SRC emacs-lisp
-    (defun custom-persp/gitorious ()
-      (interactive)
-      (let ((gitorious-home "/home/marius/Projects/gitorious/gitorious/"))
-        (custom-persp "@gitorious"
-        (find-file (concat gitorious-home "app/models/user.rb"))
-        (setq tags-file-name (concat gitorious-home "TAGS"))
-)))
+  (defun custom-persp/gitorious ()
+    (interactive)
+    (let ((gitorious-home "/home/marius/Projects/gitorious/gitorious/"))
+      (custom-persp "@gitorious"
+                    (find-file (concat gitorious-home "app/models/user.rb"))
+                    (setq tags-file-name (concat gitorious-home "TAGS"))
+                    )))
 
   (global-set-key (kbd "C-c p g") 'custom-persp/gitorious)
 #+END_SRC
 
+**** Some extra sweetness
+     I run a tmux session with a zeus instance inside. Based on the
+     following assumptions:
+     - there's a tmux session named =gitorious=
+     - this session has a window named =gts-tests=
+     - zeus is running "somewhere"
+
+     I can execute the current test file from Emacs in the
+     =gts-tests= window in the =gitorious= tmux session using =C-c
+     C-t=. Is that cool or what?
+
+#+BEGIN_SRC emacs-lisp
+  (defun gitorious/run-current-test-file ()
+    "Run tests via zeus in Tmux"
+    (interactive)
+    (shell-command (format "tmux send-keys -t gitorious:gts-tests.0 'zeus test %s' Enter" (buffer-file-name))))
+
+  (define-key ruby-mode-map (kbd "C-c C-t") 'gitorious/run-current-test-file)
+#+END_SRC
 *** Javascript
     A javascript perspective, to my current javascript project. Bound
     to =C-c p j=.

@@ -1369,3 +1369,9 @@ my_method(foo,
     (message (format "%f litres is %.2f gallons" litres (/ litres 3.78))))
 
 #+END_SRC
+** Gradle
+   Let's use groovy-mode for Gradle build files.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
+#+END_SRC

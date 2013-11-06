@@ -967,11 +967,16 @@ e src/omg/core.clj
           (setq persp-last current-perspective)))
 #+END_SRC
 
-   And setting up a few perspectives of my own
+   Set up a magic prefix key: the funny House key on my keyboard:
+
+#+BEGIN_SRC emacs-lisp
+(defun custom-persp-kbd (key)
+(kbd (concat "<XF86HomePage>" key))
+)
+#+END_SRC
 
 *** Org files
     Switch to the =@org= perspective, open =today.org= if first time.
-    Bound to =C-c p o= (mnemonic: Perspective Org)
 
 #+BEGIN_SRC emacs-lisp
 (defun custom-persp/org ()
@@ -979,7 +984,7 @@ e src/omg/core.clj
   (custom-persp "@org"
   (find-file "/home/marius/Dropbox/dotfiles/orgfiles/today.org")))
 
-(global-set-key (kbd "C-c p o") 'custom-persp/org)
+(global-set-key (custom-persp-kbd "o") 'custom-persp/org)
 #+END_SRC
 
 *** Mail
@@ -997,7 +1002,6 @@ e src/omg/core.clj
 
 *** Gitorious
     Switch to Gitorious, by default open =app/models/user.rb=.
-    Bound to =C-c p g=.
 
 #+BEGIN_SRC emacs-lisp
   (defun custom-persp/gitorious ()
@@ -1008,7 +1012,7 @@ e src/omg/core.clj
                     (setq tags-file-name (concat gitorious-home "TAGS"))
                     )))
 
-  (global-set-key (kbd "C-c p g") 'custom-persp/gitorious)
+  (global-set-key (custom-persp-kbd "g") 'custom-persp/gitorious)
 #+END_SRC
 
 **** Some extra sweetness
@@ -1031,8 +1035,7 @@ e src/omg/core.clj
   (define-key ruby-mode-map (kbd "C-c C-t") 'gitorious/run-current-test-file)
 #+END_SRC
 *** Javascript
-    A javascript perspective, to my current javascript project. Bound
-    to =C-c p j=.
+    A javascript perspective, to my current javascript project.
 
     It opens a javascript file, sets the current directory and starts
     a [[https://github.com/guard/guard][Guard]] subshell.
@@ -1053,11 +1056,11 @@ e src/omg/core.clj
                     (cd current-js-project)
 ;;                    (guard-start)
                     )))
-  (global-set-key (kbd "C-c p j") 'custom-persp/javascript)
+  (global-set-key (custom-persp-kbd "j") 'custom-persp/javascript)
 #+END_SRC
 *** Lisp
     All this scratching my private parts calls for a procrastination
-    perspective. =C-c p l= to the resque.
+    perspective. =House button l= to the resque.
 
 #+BEGIN_SRC emacs-lisp
   (defun custom-persp/procrastination ()
@@ -1066,7 +1069,7 @@ e src/omg/core.clj
     (custom-persp "@lisp"
                   (find-file (concat dotfiles-dir "/marius.org"))))
 
-  (global-set-key (kbd "C-c p l") 'custom-persp/procrastination)
+  (global-set-key (custom-persp-kbd "l") 'custom-persp/procrastination)
 #+END_SRC
 *** Puppet recipes
 #+BEGIN_SRC emacs-lisp
@@ -1076,7 +1079,7 @@ e src/omg/core.clj
     (let ((puppet-home "/home/marius/Projects/puppet"))
       (custom-persp "@puppet"
                     (find-file (concat puppet-home "/manifests/nodes.pp")))))
-(global-set-key (kbd "C-c p p") 'custom-persp/puppet)
+(global-set-key (custom-persp-kbd "p") 'custom-persp/puppet)
 #+END_SRC
 ** Unicode
    Require my very own =unicode-mode=

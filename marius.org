@@ -15,6 +15,13 @@
 #+XSLT:
 
 
+* Getting by on the Mac
+  Command is meta, option is what it should be.
+
+#+BEGIN_SRC emacs-lisp
+(setq mac-option-modifier "none")
+(setq mac-command-modifier "meta")
+#+END_SRC
 * Dot emacs, literate style
 
   This file is loaded from init.el after any .org files in extras/
@@ -171,8 +178,8 @@
 #+begin_src emacs-lisp
   (setq org-publish-project-alist
         '(("blogg"
-           :base-directory "/home/marius/Projects/blog/orgfiles"
-           :publishing-directory "/home/marius/Projects/blog/output"
+           :base-directory "/Users/marius/Projects/blog/orgfiles"
+           :publishing-directory "/Users/marius/Projects/blog/output"
            :publishing-function org-html-publish-to-html
            :headline-levels 3
            :recursive t
@@ -195,8 +202,8 @@
            :publishing-directory "/ssh:friskbris.no:/var/www/zmalltalker.com/images/"
            :publishing-function org-publish-attachment)
           ("bolig"
-           :base-directory "/home/marius/Dropbox/dotfiles/orgfiles/bolig/"
-           :publishing-directory "/home/marius/Dropbox/Public/Laarhalsen"
+           :base-directory "/Users/marius/Dropbox/dotfiles/orgfiles/bolig/"
+           :publishing-directory "/Users/marius/Dropbox/Public/Laarhalsen"
            :headline-levels 3
            :recursive t
            :table-of-contents nil
@@ -207,7 +214,7 @@
            :auto-sitemap t
            )
           ("gitorious-book"
-           :base-directory "/home/marius/Projects/gitorious/gitorious-book/"
+           :base-directory "/Users/marius/Projects/gitorious/gitorious-book/"
            :publishing-directory "/tmp/gitorious-book"
            :headline-levels 3
            :recursive t
@@ -293,7 +300,7 @@
 
 #+begin_src emacs-lisp
 (require 'magit)
-(add-to-list 'load-path "/home/marius/.emacs.d/extras")
+(add-to-list 'load-path "/Users/marius/.emacs.d/extras")
 #+end_src
 
    Magnar (or Christian?) shared some customizations for Magit
@@ -429,7 +436,7 @@
 
 #+BEGIN_SRC emacs-lisp
 (require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+'(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+END_SRC
 
 ** Speed commands in org
@@ -971,7 +978,7 @@ e src/omg/core.clj
 
 #+BEGIN_SRC emacs-lisp
 (defun custom-persp-kbd (key)
-(kbd (concat "<XF86HomePage>" key))
+(kbd (concat "<M-p>" key))
 )
 #+END_SRC
 
@@ -982,7 +989,7 @@ e src/omg/core.clj
 (defun custom-persp/org ()
   (interactive)
   (custom-persp "@org"
-  (find-file "/home/marius/Dropbox/dotfiles/orgfiles/today.org")))
+  (find-file "/Users/marius/Dropbox/dotfiles/orgfiles/today.org")))
 
 (global-set-key (custom-persp-kbd "o") 'custom-persp/org)
 #+END_SRC
@@ -1006,7 +1013,7 @@ e src/omg/core.clj
 #+BEGIN_SRC emacs-lisp
   (defun custom-persp/gitorious ()
     (interactive)
-    (let ((gitorious-home "/home/marius/Projects/gitorious/gitorious/"))
+    (let ((gitorious-home "/Users/marius/Projects/gitorious/gitorious/"))
       (custom-persp "@gitorious"
                     (find-file (concat gitorious-home "app/models/user.rb"))
                     (setq tags-file-name (concat gitorious-home "TAGS"))
@@ -1050,7 +1057,7 @@ e src/omg/core.clj
   (defun custom-persp/javascript ()
     (interactive)
     (custom-persp "@javascript"
-                  (let ((current-js-project "/home/marius/Projects/nordea-finans-sverige/webkalkyl"))
+                  (let ((current-js-project "/Users/marius/Projects/nordea-finans-sverige/webkalkyl"))
                     (setenv "JSTESTDRIVER_HOME" "/opt/lib")
                     (find-file (concat current-js-project "/src/bind.js"))
                     (cd current-js-project)
@@ -1076,7 +1083,7 @@ e src/omg/core.clj
   (defun custom-persp/puppet ()
     "Puppet perspective"
     (interactive)
-    (let ((puppet-home "/home/marius/Projects/puppet"))
+    (let ((puppet-home "/Users/marius/Projects/puppet"))
       (custom-persp "@puppet"
                     (find-file (concat puppet-home "/manifests/nodes.pp")))))
 (global-set-key (custom-persp-kbd "p") 'custom-persp/puppet)
@@ -1160,6 +1167,13 @@ GET https://gitorious.org/gitorious/mainline.xml
 
 #+BEGIN_SRC emacs-lisp
 (projectile-global-mode)
+#+END_SRC
+
+   When using =projectile-switch-project= I'll use dired rather than
+   find-file.
+
+#+BEGIN_SRC emacs-lisp
+(setq projectile-switch-project-action 'projectile-dired)
 #+END_SRC
 * My Emacs installation
   My OS (Fedora 17) ships with Emacs 24 (doesn't yours?). Sadly this

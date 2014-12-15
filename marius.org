@@ -1039,7 +1039,7 @@ e src/omg/core.clj
     (interactive)
     (shell-command (format "tmux send-keys -t gitorious:gts-tests.0 'zeus test %s' Enter" (buffer-file-name))))
 
-  (define-key ruby-mode-map (kbd "C-c C-t") 'gitorious/run-current-test-file)
+;;  (define-key ruby-mode-map (kbd "C-c C-t") 'gitorious/run-current-test-file)
 #+END_SRC
 *** Javascript
     A javascript perspective, to my current javascript project.
@@ -1322,7 +1322,7 @@ my_method(foo,
 #+END_SRC
 +BEGIN_SRC emacs-lisp
 (require 'rcodetools)
-(define-key ruby-mode-map (kbd "C-c C-c") 'xmp)
+;;(define-key ruby-mode-map (kbd "C-c C-c") 'xmp)
 #+END_SRC
 ** Other (contributed) libraries
 *** Expand region

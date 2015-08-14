@@ -454,6 +454,21 @@
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
+** Cleaning up ugly JSON
+From time to time we need to deal with really ugly "JSON", eg from
+Outlook email. To clean this up, we have this baby.
+
+ #+BEGIN_SRC emacs-lisp
+(defun zmalltalker/json-cleanup ()
+"Clean up dirty JSON from Outlook and whatnot"
+  (interactive)
+  (let ((new-contents (replace-regexp-in-string "[“”]" "\"" (buffer-string))))
+    (kill-region (point-min) (point-max))
+    (insert new-contents)
+    (json-pretty-print (point-min) (point-max))
+    ))
+
+ #+END_SRC
 ** Code cleanup
    In order to have really neat source code, it sounds like a good
    idea to have a single keystroke for cleaning up a file.
